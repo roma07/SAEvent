@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event test page</title>
+    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
+    <link rel="stylesheet" type="text/css" href="styles/event.css" />
+    <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="scripts/event.common.js"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+<div id="corp"><script type="text/javascript" src="http://js.nx.com/s1/gnb/gnb.min.js" charset="UTF-8" data-name="GNB" data-gamecode="94227" data-width="980" data-ispchub="true"></script></div>
+
+<div id="wrap">
+
+        <div id="right_menu">
+            <ul id="menu">
+                <li><a href="#event01" class="menu_pcbang active"><span class="hide">그랜드 버닝 이벤트!</span></a></li>
+                <li><a href="#event02" class="menu_clan"><span class="hide">그랜드 PC방 이벤트!</span></a></li>
+            </ul>
+            <div id="btn_top"><a href="javascript:;"><img src="../assets/images/event/btn_top.png" alt="top"></a></div>
+        </div>
+
+
+        <div id="visual" class="imgSnap">
+            <a href="#" target="_blank" class="logo"><img src="../assets/images/event/logo.png" alt=""></a>
+            <div class="centerBox">
+                <p class="hide">visual</p>
+                <br><br>
+                <input type="button" value="팝업" onclick="ngt.popup('#inputPopup');">
+                <br><br>
+                <button onclick="ngt.popup('.buttonPopup');">팝업</button>
+                <br><br>
+                <a href="javascript:;" onclick="ngt.popup('#aPopup');">팝업</a>
+                <br><br>
+                <a href="javascript:;" onclick="ngt.videoPopup('#vPopup');">영상팝업</a>
+                <br><br>
+                <a href="javascript:;" onclick="ngt.gallery('#gallery');">갤러리</a>
+                <br><br>
+                <a href="javascript:;" disabled="disabled">비활성화 버튼</a>
+                <br><br>
+                <div style="-webkit-text-security: disc;">감사합니다.</div>
+            </div>
+        </div>
+        <div id="event01" class="imgSnap">
+            <div class="centerBox">
+                <p class="hide">event01</p>
+            </div>
+        </div>
+        <div id="event02" class="imgSnap">
+            <div class="centerBox">
+                <p class="hide">event02</p>
+            </div>
+        </div>
+        <div id="footer">
+            <p class="hide">footer</p>
+        </div>
+    </div>
+
+    <div class="ngt-popup-bg"></div>
+    <div class="ngt-popup-wrap">
+        <div id="inputPopup" class="ngt-popup">
+            <p class="hide">inputPopup</p>
+        </div>
+
+        <div class="buttonPopup ngt-popup">
+            <p class="hide">buttonPopup</p>
+        </div>
+
+        <div id="aPopup" class="ngt-popup">
+            <p class="hide">aPopup</p>
+            <!-- [D] 나의 획득 기회 -->
+            <div class="myCoin_number">
+                <p><img src="../assets/images/event/num_0.png" alt="0"></p>
+                <p><img src="../assets/images/event/num_5.png" alt="5"></p>
+                <span class="hide">회</span>
+            </div>
+        </div>
+
+        <div id="vPopup" class="ngt-popup">
+            <p class="hide">vPopup</p>
+        </div>
+
+        <div id="gallery" class="ngt-gallery">
+
+        </div>
+
+        <div class="ngt-popup-close"><a href=""><img src="../assets/images/popup/popup_close.png" alt="팝업 닫기"></a></div>
+    </div>
+</body>
+</html>
