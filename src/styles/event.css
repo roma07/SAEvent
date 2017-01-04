@@ -1,7 +1,6 @@
-body {text-align: center;}
+body {position: relative;font-family:dotum,gulim,verdana,arial,sans-serif;}
 a.ngt-popup { display: inline-block;  width: 200px;  height: 38px; padding: 12px 0 0 0; text-align: center; border: 1px solid #999;background-color: #eee;}
 html,body{font-size:0;min-width: 1200px;}
-body{position: relative;}
 
 #wrap { position: relative; overflow: hidden;min-height:800px;background-color:#0d0e0f;min-width: 1200px;}
 .logo{position:absolute;top:60px;left:80px;display: block;margin-right:100px;}
@@ -12,8 +11,10 @@ body{position: relative;}
 #right_menu li a{display:block;width:90px;height:60px;}
 
 #visual{position:relative;z-index:100;width:100%;background:url("../../assets/images/event/bg_visual.png") center 0 no-repeat;}
-#visual .centerBox{height:1202px;}
-#visual input[type="button"],#visual  button { display: inline-block;width: 200px;height: 50px;  }
+#visual .centerBox{height:1202px;text-align: center;}
+#visual input[type="button"],#visual  button { display: inline-block;width: 200px;height: 50px;}
+#visual a.btn_pop{display: inline-block;width: 200px;height: 38px;  padding: 12px 0 0 0;  text-align: center;  border: 1px solid #999;  background-color: #eee; font-size:12px;}
+
 
 #event01{background:url('../../assets/images/event/bg_event01.png') center top no-repeat;position:relative;}
 #event01 .centerBox{height:1099px;}

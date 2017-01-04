@@ -12,9 +12,9 @@ ul, ol , li { list-style: none; }
 input, button { cursor: pointer; }
 table { width: 100%; border-collapse: collapse; border-spacing: 0; }
 a { color: black; text-decoration: none; }
-a:not([disabled]):link, a:not([disabled]):visited { color: green; }
-a:not([disabled]):hover, a:not([disabled]):focus { color: red; text-decoration: underline; }
-a:not([disabled]):active { color: yellow; text-decoration: underline; }
+/*a:not([disabled]):link, a:not([disabled]):visited { color: green; }*/
+/*a:not([disabled]):hover, a:not([disabled]):focus { color: red; text-decoration: underline; }*/
+/*a:not([disabled]):active { color: yellow; text-decoration: underline; }*/
 a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
 
 

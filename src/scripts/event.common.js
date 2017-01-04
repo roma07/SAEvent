@@ -3,14 +3,14 @@
  * Date: 2016-12-22
  */
 (function (window) {
-    // ---------- ±‚¥… ±∏«¸ π¸¿ß ----------
-    // ∫Í∂ÛøÏ¿˙ πˆ¿¸ √º≈©
-    // ªÛ¥‹ πŸ »∏ªÁ(nexon or naver) π◊ ≥Ù¿Ã∞™ ±∏«œ±‚
-    // IE πˆ¿¸ ¿ÃπÃ¡ˆ Ω∫≥¿¿˚øÎ
-    // ∏ﬁ¥∫ ≈¨∏ØΩ√ »∞º∫»≠
-    // ¿œπ› ∆Àæ˜
-    // ∞∂∑Ø∏Æ ∆Àæ˜
-    // ---------- ±‚¥… ±∏«¸ π¸¿ß ----------
+    // ---------- Í∏∞Îä• Íµ¨Ìòï Î≤îÏúÑ ----------
+    // Î∏åÎùºÏö∞Ï†Ä Î≤ÑÏ†Ñ Ï≤¥ÌÅ¨
+    // ÏÉÅÎã® Î∞î ÌöåÏÇ¨(nexon or naver) Î∞è ÎÜíÏù¥Í∞í Íµ¨ÌïòÍ∏∞
+    // IE Î≤ÑÏ†Ñ Ïù¥ÎØ∏ÏßÄ Ïä§ÎÉÖÏ†ÅÏö©
+    // Î©îÎâ¥ ÌÅ¥Î¶≠Ïãú ÌôúÏÑ±Ìôî
+    // ÏùºÎ∞ò ÌåùÏóÖ
+    // Í∞§Îü¨Î¶¨ ÌåùÏóÖ
+    // ---------- Í∏∞Îä• Íµ¨Ìòï Î≤îÏúÑ ----------
 
     var document = window.document;
 
@@ -63,12 +63,75 @@
     })();
 
 
+
+
     /*****************************************
      * GNB company menu bar
      ******************************************/
+    cpbar_height = null;
     var cpbar = (function(){
+      var company;
+      company  =  (function(){
+        var _company = '';
+        var loc = unescape(document.location.href);
+        var lowercase = loc.toLowerCase(loc);
+        lowercase.indexOf("sa.nexon.game.naver.com")*1 > 0 ? _company = "NAVER" : _company = "NEXON";
+        return _company;
+      })();
 
+      function getHeight(){
+        var _height;
+        if (cpbar.company=="NAVER") {
+          _height = $('.global_wrap').outerHeight();
+        } else {
+          if(cpbar_height == null){
+            if (readCookies('GNB_ONOFF')=== null){
+              _height = 210
+              createCookies('GNB_ONOFF',1);//ÌÖåÏä§Ìä∏Ïö© Ïø†ÌÇ§ÏÉùÏÑ±
+            } else if(readCookies('GNB_ONOFF') == 0){
+              _height = 40;
+            }else if(readCookies('GNB_ONOFF') == 1){
+              _height = 210;
+            }
+          }else{
+            _height = $('.gnbWrapper').outerHeight();
+          }
+          cpbar_height = _height;
+        }
+        return [_height,readCookies('GNB_ONOFF')];
+      }
+
+      //readCookies
+      function readCookies(key) {
+        var keyString = key + "=";
+        var cookieArray = document.cookie.split(';');
+        for(var i = 0; i < cookieArray.length; i++) {
+          var cookie = cookieArray[i];
+          while (cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1, cookie.length);
+          }
+          if (cookie.indexOf(keyString) == 0) return cookie.substring(keyString.length, cookie.length);
+        }
+        return null;
+      }
+      //s:ÌÖåÏä§Ìä∏Ïö© createCookies
+      function createCookies(key, value, expires) {
+        var date = new Date();
+        date.setTime(date.getTime() + (expires * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+        var path = "; path=/"
+        var domain = "; domain=" + document.domain;
+        document.cookie = key + "=" + value + expires + domain + path;
+      }
+      //e:ÌÖåÏä§Ìä∏Ïö© createCookies
+
+      return {
+        company: company,
+        height: getHeight
+      }
     })();
+
+
 
 
     /*****************************************
@@ -91,7 +154,7 @@
      * Layer popup
      ******************************************/
     var popup = (function(element){
-        //alert(element);
+      //alert(element);
     });
 
 
@@ -99,7 +162,7 @@
      * Layer popup gallery
      ******************************************/
     var gallery = (function(element){
-        //alert(element);
+      //alert(element);
     });
 
 

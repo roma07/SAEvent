@@ -8,7 +8,10 @@
     <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="scripts/event.common.js"></script>
     <script>
-
+        $(function() {
+            console.log(ngt.cpbar.company);
+            console.log(ngt.cpbar.height());
+        });
     </script>
 </head>
 <body>
@@ -34,13 +37,15 @@
                 <br><br>
                 <button onclick="ngt.popup('.buttonPopup');">팝업</button>
                 <br><br>
-                <a href="javascript:;" onclick="ngt.popup('#aPopup');">팝업</a>
+                <a href="javascript:;" onclick="ngt.popup('#aPopup');" class="btn_pop">팝업</a>
                 <br><br>
-                <a href="javascript:;" onclick="ngt.videoPopup('#vPopup');">영상팝업</a>
+                <a href="javascript:;" onclick="ngt.videoPopup('#vPopup');" class="btn_pop">영상팝업</a>
                 <br><br>
-                <a href="javascript:;" onclick="ngt.gallery('#gallery');">갤러리</a>
+                <a href="javascript:;" onclick="ngt.gallery('#gallery');" class="btn_pop"class="btn_pop">갤러리</a>
                 <br><br>
-                <a href="javascript:;" disabled="disabled">비활성화 버튼</a>
+                <a href="javascript:;" disabled="disabled" class="btn_pop">비활성화 버튼</a>
+                <br><br>
+                <a href="javascript:console.log(ngt.cpbar.height());" class="btn_pop">cpbar.height test : gnb 높이</a>
                 <br><br>
                 <div style="-webkit-text-security: disc;">감사합니다.</div>
             </div>
