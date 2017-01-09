@@ -98,7 +98,8 @@
           }
           cpbar_height = _height;
         }
-        return [_height,readCookies('GNB_ONOFF')];
+        //return [_height,readCookies('GNB_ONOFF')];
+        return _height;
       }
 
       //readCookies
@@ -137,28 +138,64 @@
     /*****************************************
      * Background image snap x position
      ******************************************/
-    var snap = function(imgW, minW){
-      var _imgW = imgW;
-      var _minW = minW;
-      function _snap(_imgW, _minW){
+    var snap = function(){
+
+      var imgW = ngt.imgW;
+      var minW = ngt.minW;
+      function _snap(imgW, minW){
         var pn;
-        $(window).width()<_minW ? pn = Math.floor((_minW-_imgW)/2) : pn = Math.floor(($(window).width()-_imgW)/2);
+        $(window).width()<minW ? pn = Math.floor((minW-imgW)/2) : pn = Math.floor(($(window).width()-imgW)/2);
         $(".imgSnap").css("background-position-x", pn+"px");
       }
       $(window).resize(function(){
-        _snap(_imgW, _minW);
+        _snap(imgW, minW);
       });
-      _snap(_imgW, _minW);
+      _snap(imgW, minW);
     };
 
 
     /*****************************************
      * Active menu
      ******************************************/
-    var activeMenu = (function(){
+    /* Parallax*/
+    var activeMenu = function(el,sectionsArr){
+      'use strict';
 
-    })();
+      if (!$('.'+el).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
+      var sectionsH = {}
+      sectionsH.oldHeight = 0;
+      var sectionsArrLeng = sectionsArr.length;
+      for(var i = 0;i < sectionsArrLeng;i++){
+        var sectionsName = sectionsArr[i];
+        sectionsH[sectionsName] = sectionsH.oldHeight ;
+        sectionsH.oldHeight = sectionsH[sectionsName]+ $('#'+sectionsName).height();
+      }
+      var menuLink = $('.'+el).find('a');
+      menuLink.each(function(i, o){
+        $(o).click(function(e){
+          e.preventDefault();
+          var selectedMenu = $(this).attr('href').slice(1);
+          console.log(selectedMenu);
+          moveScroll(selectedMenu);
+        });
+      });
 
+      function pageMove(point){
+        $("html, body").animate({ scrollTop: point}, "slow");
+      }
+      function moveScroll(scrollTarget){
+        var topHeight = sectionsH[scrollTarget];
+        console.log(sectionsH);
+        pageMove(topHeight+cpbar.height());
+      }
+
+    };
+
+    /*****************************************
+     * rightQuickMenu x position
+     ******************************************/
+    var rightQuickPosi = function(imgW, minW){
+    };
 
     /*****************************************
      * Layer popup
@@ -181,6 +218,7 @@
         cpbar: cpbar,
         //snap:snap(1920,1200),
         snap:snap,
+        activeMenu:activeMenu,
         popup: popup,
         gallery: gallery
     }
