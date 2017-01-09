@@ -137,9 +137,19 @@
     /*****************************************
      * Background image snap x position
      ******************************************/
-    var snap = (function(){
-
-    })();
+    var snap = function(imgW, minW){
+      var _imgW = imgW;
+      var _minW = minW;
+      function _snap(_imgW, _minW){
+        var pn;
+        $(window).width()<_minW ? pn = Math.floor((_minW-_imgW)/2) : pn = Math.floor(($(window).width()-_imgW)/2);
+        $(".imgSnap").css("background-position-x", pn+"px");
+      }
+      $(window).resize(function(){
+        _snap(_imgW, _minW);
+      });
+      _snap(_imgW, _minW);
+    };
 
 
     /*****************************************
@@ -169,6 +179,8 @@
     window.ngt = {
         browser: browser,
         cpbar: cpbar,
+        //snap:snap(1920,1200),
+        snap:snap,
         popup: popup,
         gallery: gallery
     }
