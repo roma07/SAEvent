@@ -15,22 +15,10 @@
             ngt.imgW = 1920;
             ngt.minW = 1200;
             ngt.snap();
-            /*
+
             //이벤트 영역 아이디값 배열로 전달
             var sectionsArr = ['visual','event01','event02'];
             ngt.activeMenu('menu',sectionsArr);//메뉴 class, 이벤트 영역 배열
-
-            //scroll
-            $(window).scroll(function() {
-                var $GNB = ngt.cpbar.height();
-                var cp = $(window).scrollTop();
-                if (cp > $GNB) {
-                    $("#header").css({"position": "fixed", 'top': 0});
-                } else {
-                    $("#header").css({"position": "absolute"});
-                }
-            });
-            */
         });
     </script>
 </head>
@@ -41,14 +29,14 @@
         <div id="header">
             <h1 id="logo"><a href="#" target="_blank"><img src="../assets/images/event/logo.png" alt="sudden attack"></a></h1>
             <ul class="menu">
-                <li class="navi navi01"><a href="#event01"><span class="hide">캐릭터 출시</span></a></li>
-                <li class="navi navi02"><a href="#event02"><span class="hide">스페셜 이벤트</span></a></li>
+                <li class="navi navi_event01"><a href="#event01"><span class="hide">캐릭터 출시</span></a></li>
+                <li class="navi navi_event02"><a href="#event02"><span class="hide">스페셜 이벤트</span></a></li>
             </ul>
         </div>
         <div id="right_menu">
             <ul class="menu">
-                <li><a href="#event01" class="menu_pcbang active"><span class="hide">그랜드 버닝 이벤트!</span></a></li>
-                <li><a href="#event02" class="menu_clan"><span class="hide">그랜드 PC방 이벤트!</span></a></li>
+                <li class="navi navi_event01"><a href="#event01"><span class="hide">그랜드 버닝 이벤트!</span></a></li>
+                <li class="navi navi_event02"><a href="#event02" class="navi navi_event02"><span class="hide">그랜드 PC방 이벤트!</span></a></li>
             </ul>
             <div id="btn_top"><a href="javascript:;"><img src="../assets/images/event/btn_top.png" alt="top"></a></div>
         </div>

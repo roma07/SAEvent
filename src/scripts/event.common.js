@@ -139,7 +139,6 @@
      * Background image snap x position
      ******************************************/
     var snap = function(){
-
       var imgW = ngt.imgW;
       var minW = ngt.minW;
       function _snap(imgW, minW){
@@ -157,7 +156,6 @@
     /*****************************************
      * Active menu
      ******************************************/
-    /* Parallax*/
     var activeMenu = function(el,sectionsArr){
       'use strict';
 
@@ -170,6 +168,7 @@
         sectionsH[sectionsName] = sectionsH.oldHeight ;
         sectionsH.oldHeight = sectionsH[sectionsName]+ $('#'+sectionsName).height();
       }
+      //click 이벤트
       var menuLink = $('.'+el).find('a');
       menuLink.each(function(i, o){
         $(o).click(function(e){
@@ -185,10 +184,36 @@
       }
       function moveScroll(scrollTarget){
         var topHeight = sectionsH[scrollTarget];
-        console.log(sectionsH);
         pageMove(topHeight+cpbar.height());
       }
+      //scroll
+      $(window).scroll(function() {
+        var $GNB = cpbar.height();
+        var cp = $(window).scrollTop();
+        if (cp > $GNB) {
+          $("#header").css({"position": "fixed", 'top': 0});
+        } else {
+          $("#header").css({"position": "absolute"});
+        }
+        var resultCode = "console.log('resultCode 실행');";
+        for(var i = 0;i < sectionsArrLeng;i++){
+          var sectionsName = sectionsArr[i];
+          var preSectionsName = sectionsArr[i+1];
+          if(i == 0){
+            resultCode +=
+              "if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
 
+          }else if(i == sectionsArrLeng-1){
+            resultCode +=
+              "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+          }else{
+            resultCode +=
+              "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+          }
+        }
+        console.log(resultCode);
+        eval(resultCode);
+      });
     };
 
     /*****************************************
