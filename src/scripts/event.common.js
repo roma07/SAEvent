@@ -174,7 +174,6 @@
         $(o).click(function(e){
           e.preventDefault();
           var selectedMenu = $(this).attr('href').slice(1);
-          console.log(selectedMenu);
           moveScroll(selectedMenu);
         });
       });
@@ -186,6 +185,30 @@
         var topHeight = sectionsH[scrollTarget];
         pageMove(topHeight+cpbar.height());
       }
+      function makecondition(){
+
+      }
+      var resultCode = "";
+      for(var i = 0;i < sectionsArrLeng;i++){
+        var sectionsName = sectionsArr[i];
+        var preSectionsName = sectionsArr[i+1];
+
+        if(i == 0){
+          resultCode +=
+            " console.log('test resultCode');if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
+
+        }else if(i == sectionsArrLeng-1){
+          resultCode +=
+            "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+        }else{
+          resultCode +=
+            "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+        }
+      }
+      //eval(resultCode);
+      var myFunction = new Function("return "+resultCode);
+
+
       //scroll
       $(window).scroll(function() {
         var $GNB = cpbar.height();
@@ -195,24 +218,8 @@
         } else {
           $("#header").css({"position": "absolute"});
         }
-        var resultCode = "console.log('resultCode 실행');";
-        for(var i = 0;i < sectionsArrLeng;i++){
-          var sectionsName = sectionsArr[i];
-          var preSectionsName = sectionsArr[i+1];
-          if(i == 0){
-            resultCode +=
-              "if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
 
-          }else if(i == sectionsArrLeng-1){
-            resultCode +=
-              "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-          }else{
-            resultCode +=
-              "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-          }
-        }
-        console.log(resultCode);
-        eval(resultCode);
+        myFunction();
       });
     };
 
