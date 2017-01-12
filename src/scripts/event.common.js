@@ -281,23 +281,26 @@
     };
 
 
-  var videoPopup = function(element,youtubeCode){
+  var videoPopup = function(element,properties){
     'use strict';
-    if (!typeof youtubeCode == 'string') { throw new Error('전달인자는 문자열로 전달해야 합니다.'); }
+    if (!typeof properties.youtubeCode == 'string') { throw new Error('전달인자는 문자열로 전달해야 합니다.'); }
+    if (!typeof properties.width == 'number'&& typeof properties.height == 'number') { throw new Error('width,height값은 숫자로 전달해야 합니다.'); }
+
+    var youtubeCode = properties.youtubeCode, width = properties.width, height = properties.height;
 
     var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg');
     ngt.popup(element);
 
-    var properties = {
-      'width':'1200',
-      'height':'674',
+    var _properties = {
+      'width':width,
+      'height':height,
       'src':"https://www.youtube.com/embed/"+youtubeCode+"?version=3&hl=ko_KR&rel=0&showinfo=0&wmode=opaque&vq=hd720",
       'frameborder':'0',
       'allowfullscreen':''
     }
     console.log($(element));
     $(element).append("<iframe class='popIframe'></iframe>")
-    $(element).find('.popIframe').attr(properties);
+    $(element).find('.popIframe').attr(_properties);
 
     $popupWrapBg.on('click', function(e) {
       e.preventDefault();
