@@ -18,11 +18,12 @@
 
             //이벤트 영역 아이디값 배열로 전달
             var sectionsArr = ['visual','event01','event02'];
-            ngt.activeMenu('menu',sectionsArr);//메뉴 class, 이벤트 영역 배열
+            //ngt.activeMenu('menu',sectionsArr);//메뉴 class, 이벤트 영역 배열
+
         });
     </script>
 </head>
-<body>
+<body class="">
 <div id="corp"><script type="text/javascript" src="http://js.nx.com/s1/gnb/gnb.min.js" charset="UTF-8" data-name="GNB" data-gamecode="94227" data-width="980" data-ispchub="true"></script></div>
 
 <div id="wrap">
@@ -66,11 +67,15 @@
         <div id="event01" class="imgSnap">
             <div class="centerBox">
                 <p class="hide">event01</p>
+                <input type="button" value="팝업" onclick="ngt.popup('#inputPopup');" class="btn_event01">
             </div>
         </div>
         <div id="event02" class="imgSnap">
             <div class="centerBox">
                 <p class="hide">event02</p>
+                <button onclick="ngt.popup('.buttonPopup');">팝업</button>
+                <br><br>
+                <a href="javascript:;" onclick="ngt.popup('#aPopup');" class="btn_pop">팝업</a>
             </div>
         </div>
         <div id="footer">
@@ -78,35 +83,33 @@
         </div>
     </div>
 
-    <div class="ngt-popup-bg"></div>
-    <div class="ngt-popup-wrap">
-        <div id="inputPopup" class="ngt-popup">
-            <p class="hide">inputPopup</p>
-        </div>
-
-        <div class="buttonPopup ngt-popup">
-            <p class="hide">buttonPopup</p>
-        </div>
-
-        <div id="aPopup" class="ngt-popup">
-            <p class="hide">aPopup</p>
-            <!-- [D] 나의 획득 기회 -->
-            <div class="myCoin_number">
-                <p><img src="../assets/images/event/num_0.png" alt="0"></p>
-                <p><img src="../assets/images/event/num_5.png" alt="5"></p>
-                <span class="hide">회</span>
-            </div>
-        </div>
-
-        <div id="vPopup" class="ngt-popup">
-            <p class="hide">vPopup</p>
-        </div>
-
-        <div id="gallery" class="ngt-gallery">
-
-        </div>
-
-        <div class="ngt-popup-close"><a href=""><img src="../assets/images/popup/popup_close.png" alt="팝업 닫기"></a></div>
+<div class="ngt-popup-bg"></div>
+<div class="ngt-popup-wrap">
+    <div id="inputPopup" class="ngt-popup">
+        <p class="hide">inputPopup</p>
     </div>
+    <div class="buttonPopup ngt-popup">
+        <p class="hide">buttonPopup</p>
+    </div>
+
+    <div id="aPopup" class="ngt-popup">
+        <p class="hide">aPopup</p>
+        <!-- [D] 나의 획득 기회 -->
+        <div class="myCoin_number">
+            <p><img src="../assets/images/event/num_0.png" alt="0"></p>
+            <p><img src="../assets/images/event/num_5.png" alt="5"></p>
+            <span class="hide">회</span>
+        </div>
+    </div>
+
+    <div id="vPopup" class="ngt-popup">
+        <p class="hide">vPopup</p>
+    </div>
+
+    <div id="gallery" class="ngt-gallery">
+
+    </div>
+    <div class="ngt-popup-close"><a href=""><img src="../assets/images/popup/popup_close.png" alt="팝업 닫기"></a></div>
+</div>
 </body>
 </html>

@@ -232,12 +232,65 @@
     /*****************************************
      * Layer popup
      ******************************************/
-    var popup = (function(element){
-      //alert(element);
-    });
+    var popup = function(element){
+      'use strict';
+
+      if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
+
+      var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg');
+
+      function init(){
+        console.log(element);
+        $(window).resize(function(){
+          popSnap();
+        });
+        popSnap();
+        openPop();
+      }
+      init();
+      function popSnap(){
+        var popHeight = $(element).height();
+        if( $(window).height()< popHeight+100 ){
+          $(element).css({
+            "marginTop": '50px',
+            "marginBottom": '50px',
+            'position':"static"
+          });
+        }else{
+          $(element).css({
+            "marginTop": (popHeight/2 * -1)+'px',
+            'position':"relative"
+          });
+        }
+      }
+      function openPop(){
+        $(element).show();
+        $popupWrapBg.show();
+        $('body').addClass('overFlowHidden');
+        $(".imgSnap,.gnbBannerSec").css("paddingRight","17px");
+      }
+      $popupWrapBg.on('click', function(e) {
+        e.preventDefault();
+        if($(e.target).is('.ngt-popup')) return;
+        $(element).hide();
+        $popupWrapBg.hide();
+        $('body').removeClass('overFlowHidden')
+        $(".imgSnap,.gnbBannerSec").css("paddingRight","0");
+      });
+
+    };
 
 
-    /*****************************************
+  var videoPopup = function(element){
+    'use strict';
+
+    ngt.popup(element);
+
+  };
+
+
+
+  /*****************************************
      * Layer popup gallery
      ******************************************/
     var gallery = (function(element){
@@ -252,6 +305,7 @@
         snap:snap,
         activeMenu:activeMenu,
         popup: popup,
+        videoPopup: videoPopup,
         gallery: gallery
     }
 })(window);
