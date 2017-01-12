@@ -281,10 +281,28 @@
     };
 
 
-  var videoPopup = function(element){
+  var videoPopup = function(element,youtubeCode){
     'use strict';
+    if (!typeof youtubeCode == 'string') { throw new Error('전달인자는 문자열로 전달해야 합니다.'); }
 
+    var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg');
     ngt.popup(element);
+
+    var properties = {
+      'width':'1200',
+      'height':'674',
+      'src':"https://www.youtube.com/embed/"+youtubeCode+"?version=3&hl=ko_KR&rel=0&showinfo=0&wmode=opaque&vq=hd720",
+      'frameborder':'0',
+      'allowfullscreen':''
+    }
+    console.log($(element));
+    $(element).append("<iframe class='popIframe'></iframe>")
+    $(element).find('.popIframe').attr(properties);
+
+    $popupWrapBg.on('click', function(e) {
+      e.preventDefault();
+      $(element).find('.popIframe').remove();
+    });
 
   };
 
