@@ -47,7 +47,7 @@ a.btn_pop{display: inline-block;width: 200px;height: 38px;  padding: 12px 0 0 0;
 /*****************************************
 * Layer popup
 ******************************************/
-.ngt-popup-bg {position: fixed ; top: 0; left: 0; width: 101% ;height: 101% ;background-color: black; opacity: 0.5 ;filter: alpha(opacity=50);z-index: 10000000;display: none;}
+.ngt-popup-bg {position: fixed ; top: 0; left: 0; width: 101% ;height: 101% ;background-color: black; opacity: 0.7 ;filter: alpha(opacity=70);z-index: 10000000;display: none;}
 .ngt-popup-wrap{position: fixed;  top: 0;  left: 0;  width: 100%; height: 100%;overflow-y: auto; cursor: zoom-out; outline: none; z-index: 10000001;display: none;}
 .ngt-popup {position: relative; display: block;margin:0 auto;background-repeat: no-repeat;background-position:center center;display:none;top:50%;cursor:auto;width:1000px}
 .ngt-popup-close{position: fixed;top:0;right:0;}
@@ -57,20 +57,40 @@ a.btn_pop{display: inline-block;width: 200px;height: 38px;  padding: 12px 0 0 0;
 #aPopup{background-image:url('../../assets/images/popup/pop_myStatus.png');height:427px;}
 #vPopup{width:1200px;height:674px;}
 #vPopup02{width:1200px;height:674px;}
+#gallery{width:1200px;height:540px;}
 
-/*
-#shade { position:fixed;top:0;left:0;width:100%;height:100%;filter:alpha(opacity=80);opacity:0.8;z-index:500;display:none; background-color:none;}
-.pop{position: absolute;left:50%;background-repeat: no-repeat;background-position:center center;width:1000px;margin-left:-500px;display:none;cursor:pointer;z-index:1000;}
-*/
 
-/*
-.buttonPopup{background-image:url('../../assets/images/popup/pop02.png');height:293px;top:1300px;}
-#aPopup{background-image:url('../../assets/images/popup/pop_myStatus.png');height:293px;top:1300px;}
-#aPopup{background-image:url('../../assets/images/popup/pop_myStatus.png');height:426px;top:1500px;}
-#aPopup .myCoin_number{position:absolute;left:171px;top:177px;}
-#aPopup .myCoin_number p{width:80px;float: left;text-align:center;}
-*/
-
+/*****************************************
+* Layer popup gallery
+******************************************/
+.list_view{float:left;width:960px;}
+.list_view li{width:960px;height:540px;display:none;position:relative;}
+.list_view li.on{display:block;}
+.list_view li#view01.on{background:url("../../assets/images/gallery/view01.png") 0 0 no-repeat;}
+.list_view li#view02.on{background:url("../../assets/images/gallery/view02.png") 0 0 no-repeat;}
+.list_view li#view03.on{background:url("../../assets/images/gallery/view03.png") 0 0 no-repeat;}
+.list_view li#view04.on{background:url("../../assets/images/gallery/view04.png") 0 0 no-repeat;}
+.list_view li#view05.on{background:url("../../assets/images/gallery/view05.png") 0 0 no-repeat;}
+.list_view li#view06.on{background:url("../../assets/images/gallery/view06.png") 0 0 no-repeat;}
+.list_view li#view07.on{background:url("../../assets/images/gallery/view07.png") 0 0 no-repeat;}
+.list_view li#view08.on{background:url("../../assets/images/gallery/view08.png") 0 0 no-repeat;}
+.list_view li#view09.on{background:url("../../assets/images/gallery/view09.png") 0 0 no-repeat;}
+.list_view li#view10.on{background:url("../../assets/images/gallery/view10.png") 0 0 no-repeat;}
+.list_view a{display:block;left:790px;bottom:30px;position: absolute;}
+.list_thum{float:right;width:220px;}
+.list_thum li{float:left;margin:0 10px 10px 0;background-color:#353535;}
+.list_thum li a{width:100px;height:100px;display:block;background-image:url("../../assets/images/gallery/bg_thum.png");background-repeat:no-repeat;opacity:0.3;filter:alpha(opacity=30);}
+.list_thum li.thum01 a{background-position:0 0;}
+.list_thum li.thum02 a{background-position:-110px 0px;}
+.list_thum li.thum03 a{background-position: 0 -110px;}
+.list_thum li.thum04 a{background-position:-110px -110px;}
+.list_thum li.thum05 a{background-position:0px -220px;}
+.list_thum li.thum06 a{background-position:-110px -220px;}
+.list_thum li.thum07 a{background-position:0px -330px;}
+.list_thum li.thum08 a{background-position:-110px -330px;}
+.list_thum li.thum09 a{background-position:0px -440px;}
+.list_thum li.thum10 a{background-position:-110px -440px;}
+.list_thum li.on a,.list_thum li a:hover{opacity:1;filter:alpha(opacity=100);}
 
 
 

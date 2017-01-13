@@ -271,11 +271,12 @@
       }
       $popupWrapBg.on('click', function(e) {
         e.preventDefault();
-        if($(e.target).is('.ngt-popup')) return;
-        $(element).hide();
-        $popupWrapBg.hide();
-        $('body').removeClass('overFlowHidden')
-        $(".imgSnap,.gnbBannerSec").css("paddingRight","0");
+        if($(e.target).is('.ngt-popup-wrap')||$(e.target).is('.ngt-popup-close img')){
+          $(element).hide();
+          $popupWrapBg.hide();
+          $('body').removeClass('overFlowHidden')
+          $(".imgSnap,.gnbBannerSec").css("paddingRight","0");
+        }
       });
 
     };
@@ -289,8 +290,6 @@
     var youtubeCode = properties.youtubeCode, width = properties.width, height = properties.height;
 
     var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg');
-    ngt.popup(element);
-
     var _properties = {
       'width':width,
       'height':height,
@@ -307,6 +306,8 @@
       $(element).find('.popIframe').remove();
     });
 
+    ngt.popup(element);
+
   };
 
 
@@ -315,7 +316,23 @@
      * Layer popup gallery
      ******************************************/
     var gallery = (function(element){
-      //alert(element);
+      ngt.popup(element);
+      $('.list_thum li').each(function() {
+        var $target = $(this).find('a').attr("href");
+        $(this).on('click', function(e) {
+          e.preventDefault();
+          $('.list_view li').removeClass('on');
+          $($target).addClass('on');
+          $('.list_thum li').removeClass('on');
+          $(this).addClass('on');
+        });
+      });
+
+      function galleryInit(){
+        $('.list_view li,.list_thum li').removeClass('on');
+        $('#view01,#view11,.thum01').addClass('on');
+      }
+      galleryInit();
     });
 
 
