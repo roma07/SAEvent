@@ -10,6 +10,7 @@
     // 메뉴 클릭시 활성화
     // 일반 팝업
     // 갤러리 팝업
+    // 우측 퀵메뉴 위치 적용
     // ---------- 기능 구형 범위 ----------
 
     var document = window.document;
@@ -174,6 +175,7 @@
         $(o).click(function(e){
           e.preventDefault();
           var selectedMenu = $(this).attr('href').slice(1);
+          console.log(selectedMenu);
           moveScroll(selectedMenu);
         });
       });
@@ -183,31 +185,9 @@
       }
       function moveScroll(scrollTarget){
         var topHeight = sectionsH[scrollTarget];
+        console.log(sectionsH);
         pageMove(topHeight+cpbar.height());
       }
-      function makecondition(){
-
-      }
-      var resultCode = "";
-      for(var i = 0;i < sectionsArrLeng;i++){
-        var sectionsName = sectionsArr[i];
-        var preSectionsName = sectionsArr[i+1];
-
-        if(i == 0){
-          resultCode +=
-            " console.log('test resultCode');if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
-
-        }else if(i == sectionsArrLeng-1){
-          resultCode +=
-            "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-        }else{
-          resultCode +=
-            "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-        }
-      }
-      //eval(resultCode);
-      var myFunction = new Function("return "+resultCode);
-
 
       //scroll
       $(window).scroll(function() {
@@ -218,16 +198,27 @@
         } else {
           $("#header").css({"position": "absolute"});
         }
+        var resultCode = "console.log('resultCode 실행');";
+        for(var i = 0;i < sectionsArrLeng;i++){
+          var sectionsName = sectionsArr[i];
+          var preSectionsName = sectionsArr[i+1];
+          if(i == 0){
+            resultCode +=
+              "if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
 
-        myFunction();
+          }else if(i == sectionsArrLeng-1){
+            resultCode +=
+              "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+          }else{
+            resultCode +=
+              "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
+          }
+        }
+        console.log(resultCode);
+        eval(resultCode);
       });
     };
 
-    /*****************************************
-     * rightQuickMenu x position
-     ******************************************/
-    var rightQuickPosi = function(imgW, minW){
-    };
 
     /*****************************************
      * Layer popup
@@ -336,7 +327,45 @@
     });
 
 
-    window.ngt = {
+  /*****************************************
+   * right quick section position
+   ******************************************/
+  var rightQuick = function(){
+    //창 너비에 따른 위치 변경
+    function positionrightQuick(){
+      if($(window).width()<1500){
+        $('#rightQuick').removeClass();
+        $('#rightQuick').addClass('atSmallLayout');
+      }else if($(window).width()>1920){
+        $('#rightQuick').removeClass();
+        $('#rightQuick').addClass('atWideLayout');
+      }else{
+        $('#rightQuick').removeClass();
+      }
+    }
+
+    //스크롤 위치에 따른 노출 변경
+    function rightQuick() {
+      if ($(window).scrollTop() < 1314) {
+        $('#rightQuick').hide();
+      } else {
+        $('#rightQuick').show();
+      }
+    }
+    rightQuick();
+    positionrightQuick();
+    $(window).resize(function(){
+      positionrightQuick();
+    });
+    $(window).scroll(function() {
+      rightQuick();
+    });
+
+  }();
+
+
+
+  window.ngt = {
         browser: browser,
         cpbar: cpbar,
         //snap:snap(1920,1200),
@@ -344,6 +373,7 @@
         activeMenu:activeMenu,
         popup: popup,
         videoPopup: videoPopup,
-        gallery: gallery
+        gallery: gallery,
+        rightQuick: rightQuick
     }
 })(window);
