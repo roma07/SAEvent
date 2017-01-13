@@ -12,9 +12,6 @@ ul, ol , li { list-style: none; }
 input, button { cursor: pointer; }
 table { width: 100%; border-collapse: collapse; border-spacing: 0; }
 a { color: black; text-decoration: none; }
-/*a:not([disabled]):link, a:not([disabled]):visited { color: green; }*/
-/*a:not([disabled]):hover, a:not([disabled]):focus { color: red; text-decoration: underline; }*/
-/*a:not([disabled]):active { color: yellow; text-decoration: underline; }*/
 a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
 
 
@@ -24,7 +21,9 @@ a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
  ******************************************/
 .hide { position: absolute; width: 0; line-height:0; height: 0; font-size: 0; top:0; left:-9999px; overflow:hidden; }
 .centerBox { position: relative; width: 1200px; min-height: 100px; margin: 0 auto;border:1px solid red;}
-
+body {position: relative;font-family:dotum,gulim,verdana,arial,sans-serif;}
+body.overFlowHidden{overflow: hidden;}
+#wrap { position: relative; overflow: hidden;}
 
 
 
@@ -32,8 +31,7 @@ a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
 /*****************************************
 * Active menu
 ******************************************/
-
-
+.menu li a{display:block;}
 
 
 
@@ -42,12 +40,10 @@ a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
 /*****************************************
 * Layer popup
 ******************************************/
-/*
-.ngt-popup-bg{position:fixed;top:0;left:0;width:100%;height:100%;filter:alpha(opacity=80);opacity:0.8;z-index:500;display:block; background-color:black;}
-.ngt-popup-wrap{}
-.ngt-popup { position: absolute; width: 1200px; z-index: 1000; display: block;left:50%;margin-left:-600px;top:50%;}
-#inputPopup{ background-image: url(../../assets/images/popup/pop01.png);height: 241px;}
-*/
+.ngt-popup-bg {position: fixed ; top: 0; left: 0; width: 101% ;height: 101% ;background-color: black; opacity: 0.7 ;filter: alpha(opacity=70);z-index: 10000000;display: none;}
+.ngt-popup-wrap{position: fixed;  top: 0;  left: 0;  width: 100%; height: 100%;overflow-y: auto; cursor: zoom-out; outline: none; z-index: 10000001;display: none;}
+.ngt-popup {position: relative; display: block;margin:0 auto;background-repeat: no-repeat;background-position:center center;display:none;top:50%;cursor:auto;width:1000px;}
+.ngt-popup-close{position: fixed;top:0;right:0;}
 
 
 
@@ -57,3 +53,8 @@ a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
 /*****************************************
 * Layer popup gallery
 ******************************************/
+.list_view{float:left;width:960px;}
+.list_thum{float:right;width:220px;}
+.list_thum li{float:left;background-color:#353535;}
+.list_thum li a{display:block;width:100px;height:100px;background-repeat:no-repeat;opacity:0.3;filter:alpha(opacity=30);}
+.list_thum li.on a,.list_thum li a:hover{opacity:1;filter:alpha(opacity=100);}
