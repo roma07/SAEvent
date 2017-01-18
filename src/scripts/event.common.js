@@ -12,6 +12,8 @@
     // 갤러리 팝업
     // 우측 퀵메뉴 위치 적용
     // ---------- 기능 구형 범위 ----------
+  var $win = $(window);
+  var $body = $('body');
 
     var document = window.document;
 
@@ -224,15 +226,17 @@
      * Layer popup
      ******************************************/
     var popup = function(element){
-      'use strict';
 
       if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
 
-      var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg');
+      var $popupWrapBg = $('.ngt-popup-close,.ngt-popup-wrap,.ngt-popup-bg'),
+           $ele = $(element),
+           popHeight = $ele.height(),
+           $popSnap = $(".imgSnap,.gnbBannerSec"),downTarget,upTarget;
+
 
       function init(){
-        console.log(element);
-        $(window).resize(function(){
+        $win.resize(function(){
           popSnap();
         });
         popSnap();
@@ -240,36 +244,48 @@
       }
       init();
       function popSnap(){
-        var popHeight = $(element).height();
-        if( $(window).height()< popHeight+100 ){
-          $(element).css({
+        if( $win.height()< popHeight+100 ){
+          $ele.css({
             "marginTop": '50px',
             "marginBottom": '50px',
             'position':"static"
           });
         }else{
-          $(element).css({
+          $ele.css({
             "marginTop": (popHeight/2 * -1)+'px',
             'position':"relative"
           });
         }
       }
       function openPop(){
-        $(element).show();
+        $ele.show();
         $popupWrapBg.show();
-        $('body').addClass('overFlowHidden');
-        $(".imgSnap,.gnbBannerSec").css("paddingRight","17px");
+        $body.addClass('overFlowHidden');
+        $popSnap.css("paddingRight","17px");
       }
+      function closePop(){
+        $ele.hide();
+        $popupWrapBg.hide();
+        $body.removeClass('overFlowHidden')
+        $popSnap.css("paddingRight","0");
+      }
+
+      $popupWrapBg.bind({
+        mousedown : function(event){
+          downTarget = $(event.target).context;
+        },
+        mouseup : function(event){
+          upTarget = $(event.target).context;
+        }
+    });
       $popupWrapBg.on('click', function(e) {
         e.preventDefault();
-        if($(e.target).is('.ngt-popup-wrap')||$(e.target).is('.ngt-popup-close img')){
-          $(element).hide();
-          $popupWrapBg.hide();
-          $('body').removeClass('overFlowHidden')
-          $(".imgSnap,.gnbBannerSec").css("paddingRight","0");
+        if(downTarget==upTarget){
+          //console.log('같은 타겟');
+          if($(e.target).hasClass('ngt-popup')) return;
+          closePop();
         }
       });
-
     };
 
 
