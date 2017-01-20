@@ -9,139 +9,80 @@
     <script type="text/javascript" src="scripts/event.common.js"></script>
     <script>
         $(function() {
-            //console.log(ngt.cpbar.company);
-            //console.log(ngt.cpbar.height());
-            //ngt.snap(1920,1200);
             ngt.imgW = 1920;
             ngt.minW = 1200;
             ngt.snap();
-            //ngt.rightQuick();
-
             //이벤트 영역 아이디값 배열로 전달
             var sectionsArr = ['visual','event01','event02'];
             ngt.activeMenu('menu',sectionsArr);//메뉴 class, 이벤트 영역 배열
-
         });
     </script>
 </head>
 <body>
+<!--
 <div id="corp"><script type="text/javascript" src="http://js.nx.com/s1/gnb/gnb.min.js" charset="UTF-8" data-name="GNB" data-gamecode="94227" data-width="980" data-ispchub="true"></script></div>
-
+-->
 <div id="wrap">
-        <div id="header">
-            <h1 id="logo"><a href="#" target="_blank"><img src="../assets/images/event/logo.png" alt="sudden attack"></a></h1>
-            <ul class="menu">
-                <li class="navi navi_event01"><a href="#event01"><span class="hide">캐릭터 출시</span></a></li>
-                <li class="navi navi_event02"><a href="#event02"><span class="hide">스페셜 이벤트</span></a></li>
-            </ul>
-        </div>
-        <div id="rightQuick" class="">
-            <ul class="menu">
-                <li class="navi navi_event01"><a href="#event01"><span class="hide">그랜드 버닝 이벤트!</span></a></li>
-                <li class="navi navi_event02"><a href="#event02" class="navi navi_event02"><span class="hide">그랜드 PC방 이벤트!</span></a></li>
-            </ul>
-            <div id="btn_top"><a href="javascript:;"><img src="../assets/images/event/btn_top.png" alt="top"></a></div>
-        </div>
-
-
-        <div id="visual" class="imgSnap">
-            <div class="centerBox">
-                <p class="hide">visual</p>
-                <br><br>
-                <input type="button" value="팝업" onclick="ngt.popup('#inputPopup');">
-                <br><br>
-                <button onclick="ngt.popup('.buttonPopup');">팝업</button>
-                <br><br>
-                <a href="javascript:;" onclick="ngt.popup('#aPopup');" class="btn_pop">팝업</a>
-                <br><br>
-                <a href="javascript:;" onclick="ngt.videoPopup('#vPopup',{youtubeCode:'bq4rHfxsbTc',width:1200,height:674});" class="btn_pop">영상팝업</a>
-                <br><br>
-                <a href="javascript:;" onclick="ngt.gallery('#gallery');" class="btn_pop"class="btn_pop">갤러리</a>
-                <br><br>
-                <a href="javascript:;" disabled="disabled" class="btn_pop">비활성화 버튼</a>
-                <br><br>
-                <a href="javascript:console.log(ngt.cpbar.height());" class="btn_pop">cpbar.height test : gnb 높이</a>
-                <br><br>
-                <div style="-webkit-text-security: disc;">감사합니다.</div>
-            </div>
-        </div>
-        <div id="event01" class="imgSnap">
-            <div class="centerBox">
-                <p class="hide">event01</p>
-                <input type="button" value="팝업" onclick="ngt.popup('#inputPopup');" class="btn_event01">
-            </div>
-        </div>
-        <div id="event02" class="imgSnap">
-            <div class="centerBox">
-                <p class="hide">event02</p>
-                <button onclick="ngt.popup('.buttonPopup');">팝업</button>
-                <br><br>
-                <a href="javascript:;" onclick="ngt.popup('#aPopup');" class="btn_pop">팝업</a>
-                <br><br>
-                <a href="javascript:;" onclick="ngt.videoPopup('#vPopup02',{youtubeCode:'LWXvLWvcbX4',width:1200,height:674});" class="btn_pop">영상팝업</a>
-            </div>
-        </div>
-        <div id="footer">
-            <p class="hide">footer</p>
-        </div>
-    </div>
-
-<div class="ngt-popup-bg"></div>
-<div class="ngt-popup-wrap">
-    <div id="inputPopup" class="ngt-popup">
-        <p class="hide">inputPopup</p>
-    </div>
-    <div class="buttonPopup ngt-popup">
-        <p class="hide">buttonPopup</p>
-        <!--<img src="../assets/images/popup/pop01.png" alt="">-->
-    </div>
-
-    <div id="aPopup" class="ngt-popup">
-        <p class="hide">aPopup</p>
-        <!-- [D] 나의 획득 기회 -->
-        <div class="myCoin_number">
-            <p><img src="../assets/images/event/num_0.png" alt="0"></p>
-            <p><img src="../assets/images/event/num_5.png" alt="5"></p>
-            <span class="hide">회</span>
-        </div>
-    </div>
-
-    <div id="vPopup" class="ngt-popup">
-        <p class="hide">vPopup</p>
-
-    </div>
-    <div id="vPopup02" class="ngt-popup">
-        <p class="hide">vPopup02</p>
-
-    </div>
-
-    <div id="gallery" class="ngt-popup">
-        <ul class="list_view">
-            <li id="view01" class="on"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view02"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view03"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view04"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view05"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view06"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view07"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view08"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view09"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view10"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-        </ul>
-        <ul class="list_thum">
-            <li class="thum01 on"><a href="#view01"></a></li>
-            <li class="thum02"><a href="#view02"></a></li>
-            <li class="thum03"><a href="#view03"></a></li>
-            <li class="thum04"><a href="#view04"></a></li>
-            <li class="thum05"><a href="#view05"></a></li>
-            <li class="thum06"><a href="#view06"></a></li>
-            <li class="thum07"><a href="#view07"></a></li>
-            <li class="thum08"><a href="#view08"></a></li>
-            <li class="thum09"><a href="#view09"></a></li>
-            <li class="thum10"><a href="#view10"></a></li>
+    <div id="header">
+        <h1 id="logo"><a href="#" target="_blank"><img src="../assets/images/event/logo.png" alt="sudden attack"></a></h1>
+        <ul class="menu">
+            <li class="navi navi_event01"><a href="#event01"><span class="hide">캐릭터 출시</span></a></li>
+            <li class="navi navi_event02"><a href="#event02"><span class="hide">스페셜 이벤트</span></a></li>
         </ul>
     </div>
-    <div class="ngt-popup-close"><a href=""><img src="../assets/images/popup/popup_close.png" alt="팝업 닫기"></a></div>
+    <div id="rightQuick" class="">
+        <ul class="menu">
+            <li class="navi navi_event01"><a href="#event01"><span class="hide">그랜드 버닝 이벤트!</span></a></li>
+            <li class="navi navi_event02"><a href="#event02" class="navi navi_event02"><span class="hide">그랜드 PC방 이벤트!</span></a></li>
+        </ul>
+        <div id="btn_top"><a href="javascript:;"><img src="../assets/images/event/btn_top.png" alt="top"></a></div>
+    </div>
+    <style>
+        /*[D] 스타일 선언 : 해당 팝업의 백그라운드 이미지 설정*/
+        #aPopup { background: url("../assets/images/popup/pop_myStatus.png"); }
+        #bPopup { background: url("../assets/images/popup/pop02.png"); }
+    </style>
+
+    <div id="visual" class="imgSnap">
+        <div class="centerBox">
+            <!--[D]
+            ngt.popup(element, options);
+             element: id or class name
+             options: {
+                'width': 1200, //popup width size
+                'height':600, //popup height size
+                'zIndex': 1000, //popup zIndex
+                'marginTop': 50, //popup margin top
+             }
+                'bgOpacity': 0.5 //shade background alpha(0~1)
+            -->
+            <button onclick="ngt.popup('#aPopup', {width: 1000, height: 426, zIndex: 10000000, marginTop:100, bgOpacity: 0.7});">new 팝업 A</button>
+            <button onclick="ngt.popup('#bPopup', {width: 1000, height: 601, zIndex: 10000000, marginTop: 30, bgOpacity: 0.5});">new 팝업 B</button>
+            <!--<button onclick="ngt.videoPopup('bq4rHfxsbTc', {width: 650, height: 360, autoplay: 'auto', zIndex: 10000000});">new 팝업</button>-->
+        </div>
+    </div>
+    <div id="event01" class="imgSnap">
+        <div class="centerBox">
+        </div>
+    </div>
+    <div id="event02" class="imgSnap">
+        <div class="centerBox"></div>
+    </div>
+    <div id="footer">
+        <p class="hide">footer</p>
+    </div>
 </div>
+
+<div id="aPopup" class="ngt-popup">
+    <p class="hide">aPopup</p>
+    <!-- [D] 나의 획득 기회 -->
+    <div class="myCoin_number">
+        <p><img src="../assets/images/event/num_0.png" alt="0"></p>
+        <p><img src="../assets/images/event/num_5.png" alt="5"></p>
+        <span class="hide">회</span>
+    </div>
+</div>
+<div id="bPopup" class="ngt-popup"></div>
+
 </body>
 </html>
