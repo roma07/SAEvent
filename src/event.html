@@ -39,8 +39,8 @@
     </div>
     <style>
         /*[D] 스타일 선언 : 해당 팝업의 백그라운드 이미지 설정*/
-        #aPopup { background: url("../assets/images/popup/pop_myStatus.png"); }
-        #bPopup { background: url("../assets/images/popup/pop02.png"); }
+        #aPopup { background-image: url("../assets/images/popup/pop_myStatus.png"); }
+        #bPopup { background-image: url("../assets/images/popup/pop02.png"); }
     </style>
 
     <div id="visual" class="imgSnap">
@@ -53,12 +53,30 @@
                 'height':600, //popup height size
                 'zIndex': 1000, //popup zIndex
                 'marginTop': 50, //popup margin top
-             }
                 'bgOpacity': 0.5 //shade background alpha(0~1)
+             }
             -->
-            <button onclick="ngt.popup('#aPopup', {width: 1000, height: 426, zIndex: 10000000, marginTop:100, bgOpacity: 0.7});">new 팝업 A</button>
-            <button onclick="ngt.popup('#bPopup', {width: 1000, height: 601, zIndex: 10000000, marginTop: 30, bgOpacity: 0.5});">new 팝업 B</button>
-            <!--<button onclick="ngt.videoPopup('bq4rHfxsbTc', {width: 650, height: 360, autoplay: 'auto', zIndex: 10000000});">new 팝업</button>-->
+            <button onclick="ngt.popup('#aPopup',{height:800})">new 팝업 A</button>
+            <button onclick="ngt.popup('#bPopup', {width: 1000, height:601, zIndex: 10000000, bgOpacity:0.8});">new 팝업 B</button>
+
+            <!--[D]
+            ngt.videoPopup(youtubeCode,options,youtubeOptions);
+             youtubeCode,
+             options: {
+                'width': 1200, //popup width size,영상 사이즈
+                'height':600, //popup height size,영상 사이즈
+                'zIndex': 1000, //popup zIndex
+                'marginTop': 50, //popup margin top
+                'bgOpacity': 0.5 //shade background alpha(0~1)
+            }
+            youtubeOptions: {
+                'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
+                'controls': 1, //플레이어 컨트롤 표시
+                'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
+             }
+            -->
+            <button onclick="ngt.videoPopup('bq4rHfxsbTc', {width: 1000, height: 601,zIndex: 10000000, marginTop: 30, bgOpacity: 0.5} ,{rel:0, controls:0, showinfo:1});">비디오 팝업</button>
+            <button onclick="ngt.videoPopup('bq4rHfxsbTc');">비디오 팝업2</button>
         </div>
     </div>
     <div id="event01" class="imgSnap">
