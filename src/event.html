@@ -15,6 +15,7 @@
             //이벤트 영역 아이디값 배열로 전달
             var sectionsArr = ['visual','event01','event02'];
             ngt.activeMenu('menu',sectionsArr);//메뉴 class, 이벤트 영역 배열
+            console.log(ngt.browser.info());
         });
     </script>
 </head>
@@ -56,19 +57,14 @@
                 'bgOpacity': 0.5 //shade background alpha(0~1)
              }
             -->
-            <button onclick="ngt.popup('#aPopup',{height:800})">new 팝업 A</button>
-            <button onclick="ngt.popup('#bPopup', {width: 1000, height:601, zIndex: 10000000, bgOpacity:0.8});">new 팝업 B</button>
+            <button onclick="ngt.defaultPopup('#aPopup',{height:800})">new 팝업 A</button>
+            <!--<button onclick="console.log(ngt.popup.info())">new 팝업 A</button>-->
+            <button onclick="ngt.defaultPopup('#bPopup', {width: 1000, height:601, zIndex: 10000000, bgOpacity:0.8});">new 팝업 B</button>
 
             <!--[D]
             ngt.videoPopup(youtubeCode,options,youtubeOptions);
-             youtubeCode,
-             options: {
-                'width': 1200, //popup width size,영상 사이즈
-                'height':600, //popup height size,영상 사이즈
-                'zIndex': 1000, //popup zIndex
-                'marginTop': 50, //popup margin top
-                'bgOpacity': 0.5 //shade background alpha(0~1)
-            }
+             youtubeCode, //필수
+            options: //ngt.popup 동일
             youtubeOptions: {
                 'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
                 'controls': 1, //플레이어 컨트롤 표시

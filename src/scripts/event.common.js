@@ -225,79 +225,62 @@
     /*****************************************
      * Layer popup
      ******************************************/
-    var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex;
+    var popup = (function(){
+      // popup전역 변수
+      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,
+          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,$popSnap,
+          downTarget, //[D] when popup button clicked, mousedown evnet's target
+          upTarget; //[D] when popup button clicked, mouseup evnet's target
 
-    var popOptionsValidate = function(options){
-      //[D] 옵션값이 숫자인지 확인
-      options = options || {};
-
-      if(Object.keys(options).length){
-        for(var key in options){
-          if(typeof options[key] != 'number') {
-            throw new Error(key + '값은 숫자로 전달해야 합니다.');
-          }
-        }
-      }
-      //[D] bgOpacity 0~1 사이의 소수점 1째 자리 숫자인지 확인
-      if(options.bgOpacity != undefined){
-        if(options.bgOpacity*10 != parseInt(options.bgOpacity*10)){
-          throw new Error('bgOpacity 값은 소수점 1째 자리 까지의 숫자로 전달해야 합니다.');
-        }else if(options.bgOpacity<0 || options.bgOpacity > 1){
-          throw new Error('bgOpacity 값은 0~1 사이의 숫자로 전달해야 합니다.');
-        }
-      }
-
-      var _options = {
-        'width': 1200,
-        'height':600,
-        'zIndex': 1000,
-        'marginTop': 50,
-        'bgOpacity': 0.5
-      }
-
-      popWidth = options.width || _options.width;
-      popHeight = options.height || _options.height;
-      popBgOpacity = options.bgOpacity || _options.bgOpacity;
-      popMarginTop = options.marginTop || _options.marginTop;
-      popZIndex = options.zIndex || _options.zIndex;
-    }
-
-    var popup = function(element,options){
-
-      //[D] 파라미터 유효성체크
-      if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
-      popOptionsValidate(options);
 
       /*[D]
-        ngt.popup(element, options);
-        element: id or class name
-        options: {
-          'width': 1200, //popup width size
-          'height':600, //popup height size
-          'zIndex': 1000, //popup zIndex
-          'marginTop': 50, //popup margin top
-          'bgOpacity': 0.5 //shade background alpha
+       ngt.popup(element, options);
+       element: id or class name
+       options: {
+       'width': 1200, //popup width size
+       'height':600, //popup height size
+       'zIndex': 1000, //popup zIndex
+       'marginTop': 50, //popup margin top
+       'bgOpacity': 0.5 //shade background alpha
+       }
+       */
+      //[D] 팝업 옵션 유효성 검사
+      var popOptionsValidate = function(options){
+        //[D] 옵션값이 숫자인지 확인
+        options = options || {};
+
+        if(Object.keys(options).length){
+          for(var key in options){
+            if(typeof options[key] != 'number') {
+              throw new Error(key + '값은 숫자로 전달해야 합니다.');
+            }
+          }
+        }
+        //[D] bgOpacity 0~1 사이의 소수점 1째 자리 숫자인지 확인
+        if(options.bgOpacity != undefined){
+          if(options.bgOpacity*10 != parseInt(options.bgOpacity*10)){
+            throw new Error('bgOpacity 값은 소수점 1째 자리 까지의 숫자로 전달해야 합니다.');
+          }else if(options.bgOpacity<0 || options.bgOpacity > 1){
+            throw new Error('bgOpacity 값은 0~1 사이의 숫자로 전달해야 합니다.');
+          }
+        }
+
+        var _options = {
+          'width': 1200,
+          'height':600,
+          'zIndex': 1000,
+          'marginTop': 50,
+          'bgOpacity': 0.5
+        }
+
+        popWidth = options.width || _options.width;
+        popHeight = options.height || _options.height;
+        popBgOpacity = options.bgOpacity || _options.bgOpacity;
+        popMarginTop = options.marginTop || _options.marginTop;
+        popZIndex = options.zIndex || _options.zIndex;
+
+
       }
-      */
-
-      var downTarget, //[D] when popup button clicked, mousedown evnet's target
-          upTarget, //[D] when popup button clicked, mouseup evnet's target
-          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,
-          $ele = $(element),
-          $popSnap = $(".imgSnap,.gnbBannerSec");
-
-
-      //[D] 초기 실행
-      function init(){
-        createBasisEle();
-        $win.resize(function(){
-          popSnap();
-        });
-        popSnap();
-        openPop();
-        bindEvent();
-      }
-      init();
 
       //[D] 팝업 기반요소 생성
       function createBasisEle(){
@@ -316,6 +299,7 @@
         $popCloseBtn = $('#ngt-popup-close');
         $popupWrapBg = $('#ngt-popup-close,#ngt-popup-wrap,#ngt-popup-bg');
       }
+
       //[D] 팝업 기반요소 삭제
       function removeBasisEle(){
         $('#ngt-popup-bg').remove();
@@ -382,81 +366,82 @@
         $popupWrapBg.on("mousedown",mouseDownValidate );
         $popupWrapBg.on("mouseup ",mouseUpValidate );
       }
-    };
 
+      var defaultType = function(element,options){
+        //[D] 파라미터 유효성체크
+        if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
+        popOptionsValidate(options);
 
-  var videoPopup = function(youtubeCode,options,youtubeOptions){
-    /*[D]
-     ngt.videoPopup(youtubeCode,options);
-     youtubeCode,
-     options: {
-     'width': 1200, //popup width size,영상 사이즈
-     'height':600, //popup height size,영상 사이즈
-     'zIndex': 1000, //popup zIndex
-     'marginTop': 50, //popup margin top
-     'bgOpacity': 0.5 //shade background alpha(0~1)
-     'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
-     'controls': 1, //플레이어 컨트롤 표시
-     'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
-     }
-     */
+        $ele = $(element),
+        $popSnap = $(".imgSnap,.gnbBannerSec");
 
-    //[D] youtubeCode 유효성체크
-    if (!typeof youtubeCode == 'string') { throw new Error('전달인자는 문자열로 전달해야 합니다.'); }
-    //[D] 팝업 옵션 유효성체크
-    popOptionsValidate(options);
-
-    //[D] youtubeOptions 유효성체크 (숫자 0 또는 1 인지 확인)
-    youtubeOptions = youtubeOptions || {};
-    for(var key in youtubeOptions){
-      if(!(youtubeOptions[key] == 0 || youtubeOptions[key] == 1)){
-        throw new Error(key+'값은 0 또는 1로 전달해야 합니다.');
+        createBasisEle();
+        $win.resize(function(){
+          popSnap();
+        });
+        popSnap();
+        openPop();
+        bindEvent();
       }
-    }
-    var _youtubeOptions = {
-      'rel': 1,
-      'controls': 1,
-      'showinfo': 1
-    }
-    var rel = (youtubeOptions.rel!="undefined")? youtubeOptions.rel: _youtubeOptions.rel,
-        controls = (youtubeOptions!="undefined")? youtubeOptions.controls: _youtubeOptions.controls,
-        showinfo = (youtubeOptions.showinfo!="undefined")? youtubeOptions.showinfo: _youtubeOptions.showinfo;
 
-    //[D] 초기 실행
-    function init(){
-      createVideoEle();
-    }
-    init();
+      var videoType = function(youtubeCode,options,youtubeOptions){
 
-    //[D] 비디오팝업 요소 생성
-    function createVideoEle(){
-      $('body').append("<div id='videoPopup' class='ngt-popup'></div>");
-      $('#videoPopup').append("<iframe class='popIframe'></iframe>");
+        /*[D]
+         ngt.videoPopup(youtubeCode,options,youtubeOptions);
+         youtubeCode, //필수
+         options: //ngt.popup 동일
+         youtubeOptions: {
+         'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
+         'controls': 1, //플레이어 컨트롤 표시
+         'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
+         }
+         */
 
-      $('.popIframe').attr({
-        width:popWidth,
-        height:popHeight,
-        //src:"https://www.youtube.com/embed/R-8O5Ew-X_I",
-        'src':"https://www.youtube.com/embed/"+youtubeCode+"?rel="+rel+"&controls="+controls+"&showinfo="+showinfo,
-        frameborder:'0',
-        allowfullscreen:''
-      });
-    }
-    //[D] 비디오팝업 요소 삭제
-    function removeVideoEle(){
-      $('#videoPopup').remove();
-      $('#videoPopup').find('.popIframe').remove();
-    }
-    /*
-    $popupWrapBg.on('click', function(e) {
-      e.preventDefault();
-      removeVideoEle();
-    })
-    */
+        //[D] youtubeCode 유효성체크
+        if (!typeof youtubeCode == 'string') { throw new Error('전달인자는 문자열로 전달해야 합니다.'); }
 
+        //[D] youtubeOptions 유효성체크 (숫자 0 또는 1 인지 확인)
+        youtubeOptions = youtubeOptions || {};
+        for(var key in youtubeOptions){
+          if(!(youtubeOptions[key] == 0 || youtubeOptions[key] == 1)){
+            throw new Error(key+'값은 0 또는 1로 전달해야 합니다.');
+          }
+        }
+        //[D] youtubeOptions default 값
+        var _youtubeOptions = {
+          'rel': 1,
+          'controls': 1,
+          'showinfo': 1
+        }
+        var rel = (youtubeOptions.rel!="undefined")? youtubeOptions.rel: _youtubeOptions.rel,
+          controls = (youtubeOptions.controls!="undefined")? youtubeOptions.controls: _youtubeOptions.controls,
+          showinfo = (youtubeOptions.showinfo!="undefined")? youtubeOptions.showinfo: _youtubeOptions.showinfo;
 
-    ngt.popup('#videoPopup',options);
-  };
+        //[D] 비디오팝업 요소 생성
+        $('body').append("<div id='videoPopup' class='ngt-popup'></div>");
+        $('#videoPopup').append("<iframe class='popIframe'></iframe>");
+        defaultType('#videoPopup',options);
+        $('.popIframe').attr({
+          width:popWidth,
+          height:popHeight,
+          'src':"https://www.youtube.com/embed/"+youtubeCode+"?rel="+rel+"&controls="+controls+"&showinfo="+showinfo,
+          frameborder:'0',
+          allowfullscreen:''
+        });
+        //[D] 비디오팝업 요소 삭제
+         $popupWrapBg.on('click', function(e) {
+           e.preventDefault();
+           $('#videoPopup').remove();
+           $('#videoPopup').find('.popIframe').remove();
+         })
+      };
+
+      return {
+        defaultPopup: defaultType,
+        videoPopup: videoType
+      }
+
+    })();
 
 
 
@@ -529,7 +514,8 @@
         snap:snap,
         activeMenu:activeMenu,
         popup: popup,
-        videoPopup: videoPopup,
+        defaultPopup: popup.defaultPopup,
+        videoPopup: popup.videoPopup,
         gallery: gallery,
         rightQuick: rightQuick
     }
