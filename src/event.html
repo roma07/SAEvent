@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Event test page</title>
-    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
-    <link rel="stylesheet" type="text/css" href="styles/event.css" />
+    <link rel="stylesheet" type="text/css" href="styles/event.common_0124.css" />
+    <link rel="stylesheet" type="text/css" href="styles/event_0124.css" />
     <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="scripts/event.common.js"></script>
+    <script type="text/javascript" src="scripts/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="scripts/event.common_0124.js"></script>
     <script>
         $(function() {
             ngt.imgW = 1920;
@@ -20,9 +21,7 @@
     </script>
 </head>
 <body>
-<!--
 <div id="corp"><script type="text/javascript" src="http://js.nx.com/s1/gnb/gnb.min.js" charset="UTF-8" data-name="GNB" data-gamecode="94227" data-width="980" data-ispchub="true"></script></div>
--->
 <div id="wrap">
     <div id="header">
         <h1 id="logo"><a href="#" target="_blank"><img src="../assets/images/event/logo.png" alt="sudden attack"></a></h1>
@@ -59,7 +58,7 @@
             -->
             <button onclick="ngt.defaultPopup('#aPopup',{height:800})">new 팝업 A</button>
             <!--<button onclick="console.log(ngt.popup.info())">new 팝업 A</button>-->
-            <button onclick="ngt.defaultPopup('#bPopup', {width: 1000, height:601, zIndex: 10000000, bgOpacity:0.8});">new 팝업 B</button>
+            <button onclick="ngt.defaultPopup('#bPopup', {width: 1000, height:601, zIndex: 10000000, bgOpacity:0.5});">new 팝업 B</button>
 
             <!--[D]
             ngt.videoPopup(youtubeCode,options,youtubeOptions);

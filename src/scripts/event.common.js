@@ -4,13 +4,9 @@
  */
 (function (window) {
     // ---------- 기능 구형 범위 ----------
-    // 브라우저 버전 체크
-    // 상단 바 회사(nexon or naver) 및 높이값 구하기
-    // IE 버전 이미지 스냅적용
-    // 메뉴 클릭시 활성화
     // 일반 팝업
+    // 비디오 팝업
     // 갤러리 팝업
-    // 우측 퀵메뉴 위치 적용
     // ---------- 기능 구형 범위 ----------
   var $win = $(window);
   var $body = $('body');
@@ -18,216 +14,11 @@
     var document = window.document;
 
     /*****************************************
-     * Browser information
-     ******************************************/
-    var browser = (function(){
-        var company = null, agent = null, versionSearchString = null;
-        var dataBrowser = [
-            {string: navigator.userAgent, subString: "Edge", identity: "MS Edge"},
-            {string: navigator.userAgent, subString: "MSIE", identity: "Explorer"},
-            {string: navigator.userAgent, subString: "Trident", identity: "Explorer"},
-            {string: navigator.userAgent, subString: "Firefox", identity: "Firefox"},
-            {string: navigator.userAgent, subString: "Opera", identity: "Opera"},
-            {string: navigator.userAgent, subString: "OPR", identity: "Opera"},
-            {string: navigator.userAgent, subString: "Chrome", identity: "Chrome"},
-            {string: navigator.userAgent, subString: "Safari", identity: "Safari"}
-        ];
-
-        function init(){
-            company = searchString(dataBrowser) || "Other";
-            agent = searchVersion(navigator.userAgent) || searchVersion(navigator.appVersion) || "Unknown";
-        }
-        function searchString(data) {
-            for (var i = 0; i < data.length; i++) {
-                var dataString = data[i].string;
-                versionSearchString = data[i].subString;
-                if (dataString.indexOf(data[i].subString) !== -1)return data[i].identity;
-            }
-        }
-        function searchVersion(dataString) {
-            var index = dataString.indexOf(versionSearchString);
-            if (index === -1) return;
-            var rv = dataString.indexOf("rv:");
-            if (versionSearchString === "Trident" && rv !== -1) {
-                return parseFloat(dataString.substring(rv + 3));
-            } else {
-                return parseFloat(dataString.substring(index + versionSearchString.length + 1));
-            }
-        }
-        init();
-
-        return {
-            name: company,
-            version: agent,
-            info: function(){
-                return "You are using " + company + " with version " + agent + ".";
-            }
-        }
-    })();
-
-
-
-
-    /*****************************************
-     * GNB company menu bar
-     ******************************************/
-    cpbar_height = null;
-    var cpbar = (function(){
-      var company;
-      company  =  (function(){
-        var _company = '';
-        var loc = unescape(document.location.href);
-        var lowercase = loc.toLowerCase(loc);
-        lowercase.indexOf("sa.nexon.game.naver.com")*1 > 0 ? _company = "NAVER" : _company = "NEXON";
-        return _company;
-      })();
-
-      function getHeight(){
-        var _height;
-        if (cpbar.company=="NAVER") {
-          _height = $('.global_wrap').outerHeight();
-        } else {
-          if(cpbar_height == null){
-            if (readCookies('GNB_ONOFF')=== null){
-              _height = 210
-              createCookies('GNB_ONOFF',1);//테스트용 쿠키생성
-            } else if(readCookies('GNB_ONOFF') == 0){
-              _height = 40;
-            }else if(readCookies('GNB_ONOFF') == 1){
-              _height = 210;
-            }
-          }else{
-            _height = $('.gnbWrapper').outerHeight();
-          }
-          cpbar_height = _height;
-        }
-        //return [_height,readCookies('GNB_ONOFF')];
-        return _height;
-      }
-
-      //readCookies
-      function readCookies(key) {
-        var keyString = key + "=";
-        var cookieArray = document.cookie.split(';');
-        for(var i = 0; i < cookieArray.length; i++) {
-          var cookie = cookieArray[i];
-          while (cookie.charAt(0) == ' ') {
-            cookie = cookie.substring(1, cookie.length);
-          }
-          if (cookie.indexOf(keyString) == 0) return cookie.substring(keyString.length, cookie.length);
-        }
-        return null;
-      }
-      //s:테스트용 createCookies
-      function createCookies(key, value, expires) {
-        var date = new Date();
-        date.setTime(date.getTime() + (expires * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-        var path = "; path=/"
-        var domain = "; domain=" + document.domain;
-        document.cookie = key + "=" + value + expires + domain + path;
-      }
-      //e:테스트용 createCookies
-
-      return {
-        company: company,
-        height: getHeight
-      }
-    })();
-
-
-
-
-    /*****************************************
-     * Background image snap x position
-     ******************************************/
-    var snap = function(){
-      var imgW = ngt.imgW;
-      var minW = ngt.minW;
-      function _snap(imgW, minW){
-        var pn;
-        $(window).width()<minW ? pn = Math.floor((minW-imgW)/2) : pn = Math.floor(($(window).width()-imgW)/2);
-        $(".imgSnap").css("background-position-x", pn+"px");
-      }
-      $(window).resize(function(){
-        _snap(imgW, minW);
-      });
-      _snap(imgW, minW);
-    };
-
-
-    /*****************************************
-     * Active menu
-     ******************************************/
-    var activeMenu = function(el,sectionsArr){
-      'use strict';
-
-      if (!$('.'+el).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
-      var sectionsH = {}
-      sectionsH.oldHeight = 0;
-      var sectionsArrLeng = sectionsArr.length;
-      for(var i = 0;i < sectionsArrLeng;i++){
-        var sectionsName = sectionsArr[i];
-        sectionsH[sectionsName] = sectionsH.oldHeight ;
-        sectionsH.oldHeight = sectionsH[sectionsName]+ $('#'+sectionsName).height();
-      }
-      //click 이벤트
-      var menuLink = $('.'+el).find('a');
-      menuLink.each(function(i, o){
-        $(o).click(function(e){
-          e.preventDefault();
-          var selectedMenu = $(this).attr('href').slice(1);
-          console.log(selectedMenu);
-          moveScroll(selectedMenu);
-        });
-      });
-
-      function pageMove(point){
-        $("html, body").animate({ scrollTop: point}, "slow");
-      }
-      function moveScroll(scrollTarget){
-        var topHeight = sectionsH[scrollTarget];
-        console.log(sectionsH);
-        pageMove(topHeight+cpbar.height());
-      }
-
-      //scroll
-      $(window).scroll(function() {
-        var $GNB = cpbar.height();
-        var cp = $(window).scrollTop();
-        if (cp > $GNB) {
-          $("#header").css({"position": "fixed", 'top': 0});
-        } else {
-          $("#header").css({"position": "absolute"});
-        }
-        var resultCode = "console.log('resultCode 실행');";
-        for(var i = 0;i < sectionsArrLeng;i++){
-          var sectionsName = sectionsArr[i];
-          var preSectionsName = sectionsArr[i+1];
-          if(i == 0){
-            resultCode +=
-              "if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');}";
-
-          }else if(i == sectionsArrLeng-1){
-            resultCode +=
-              "else{$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-          }else{
-            resultCode +=
-              "else if($(window).scrollTop()<= sectionsH."+preSectionsName+"){$('.navi').removeClass('active');$('.navi_"+sectionsName+"').addClass('active');}";
-          }
-        }
-        console.log(resultCode);
-        eval(resultCode);
-      });
-    };
-
-
-    /*****************************************
-     * Layer popup
+     * popup
      ******************************************/
     var popup = (function(){
       // popup전역 변수
-      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,
+      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,adjustedPopMarginTop,
           $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,$popSnap,
           downTarget, //[D] when popup button clicked, mousedown evnet's target
           upTarget; //[D] when popup button clicked, mouseup evnet's target
@@ -307,42 +98,77 @@
         $('#ngt-popup-wrap').remove();
       }
 
-      //[D] 팝업 위치 조절
-      function popSnap(){
-        if( $win.height()< popHeight+(popMarginTop*2) ){
+      //[D] 오픈시 팝업 위치 조절
+      function popBeforeOpenSnap(){
+        if( $win.height()<= popHeight+(popMarginTop*2) ){
+          console.log('팝업이 화면보다 큼')
           $ele.css({
-            "marginTop": popMarginTop,
-            "marginBottom": popMarginTop,
+            "marginTop": popMarginTop+100,
+            "height": popHeight,
             'position':"static"
           });
+          popHeight = popHeight;
+          adjustedPopMarginTop = popMarginTop;
         }else{
+          console.log('팝업이 화면보다 작음')
+          adjustedPopMarginTop = (popHeight/2 * -1);
           $ele.css({
-            "marginTop": (popHeight/2 * -1)+'px',
+            "marginTop": adjustedPopMarginTop+100,
+            "height":$win.height()-(($win.height()-popHeight)/2)-100,
             'position':"relative"
           });
+          popHeight = $win.height()-(($win.height()-popHeight)/2);
+        }
+      }
+      //[D] 팝업 위치 조절
+      function popSnap(){
+        console.log(popMarginTop);
+        if( $win.height()< popHeight+popMarginTop*2){
+          console.log('리사이징중: 팝업이 화면보다 큼')
+          $ele.css({
+            "marginTop": popMarginTop,
+            "height": popHeight,
+            'position':"static"
+          });
+          //adjustedPopMarginTop = popMarginTop;
+        }else{
+          console.log('리사이징중: 팝업이 화면보다 작음')
+          $ele.css({
+            "marginTop": (popHeight/2 * -1)+'px',
+            "height":$win.height()-(($win.height()-popHeight)/2),
+            'position':"relative"
+          });
+          //adjustedPopMarginTop = (popHeight/2 * -1);
         }
       }
 
       //[D] 팝업 열기
       function openPop(){
+        console.log('openPop');
         $ele.css({
-          'width': popWidth,
-          'height': popHeight
+          'width': popWidth
         })
         $popWrap.append($ele);
         $ele.show();
+        $ele.animate({
+          'marginTop' :adjustedPopMarginTop,
+          'height':popHeight
+        },500,'easeInCubic',function(){});
         $popupWrapBg.show();
         $('body').addClass('overFlowHidden');
-        $popSnap.css("paddingRight","17px");
+        //$popSnap.css("paddingRight","17px");
       }
 
       //[D] 팝업 닫기
       function closePop(){
-        $ele.hide();
-        $popupWrapBg.hide();
-        $('body').removeClass('overFlowHidden')
-        $popSnap.css("paddingRight","0");
-        removeBasisEle();
+        afterClosePop();
+        function afterClosePop(){
+          $ele.hide();
+          $popupWrapBg.hide();
+          $('body').removeClass('overFlowHidden')
+          //$popSnap.css("paddingRight","0");
+          removeBasisEle();
+        }
       }
 
       //[D] 이벤트 바인드
@@ -376,11 +202,11 @@
         $popSnap = $(".imgSnap,.gnbBannerSec");
 
         createBasisEle();
+        popBeforeOpenSnap();
+        openPop();
         $win.resize(function(){
           popSnap();
         });
-        popSnap();
-        openPop();
         bindEvent();
       }
 
@@ -435,19 +261,32 @@
            $('#videoPopup').find('.popIframe').remove();
          })
       };
+      var galleryType = function(element,options){
 
+        /*[D]
+         ngt.videoPopup(youtubeCode,options,youtubeOptions);
+         youtubeCode, //필수
+         options: //ngt.popup 동일
+         youtubeOptions: {
+         'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
+         'controls': 1, //플레이어 컨트롤 표시
+         'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
+         }
+         */
+        defaultType(element,options);
+      };
       return {
-        defaultPopup: defaultType,
-        videoPopup: videoType
+        defaultPopup : defaultType,
+        videoPopup : videoType,
+        galleryPopup : galleryType
       }
-
     })();
 
 
 
   /*****************************************
      * Layer popup gallery
-     ******************************************/
+     *****************************************
     var gallery = (function(element){
       ngt.popup(element);
       $('.list_thum li').each(function() {
@@ -467,56 +306,12 @@
       }
       galleryInit();
     });
-
-
-  /*****************************************
-   * right quick section position
-   ******************************************/
-  var rightQuick = function(){
-    //창 너비에 따른 위치 변경
-    function positionrightQuick(){
-      if($(window).width()<1500){
-        $('#rightQuick').removeClass();
-        $('#rightQuick').addClass('atSmallLayout');
-      }else if($(window).width()>1920){
-        $('#rightQuick').removeClass();
-        $('#rightQuick').addClass('atWideLayout');
-      }else{
-        $('#rightQuick').removeClass();
-      }
-    }
-
-    //스크롤 위치에 따른 노출 변경
-    function rightQuick() {
-      if ($(window).scrollTop() < 1314) {
-        $('#rightQuick').hide();
-      } else {
-        $('#rightQuick').show();
-      }
-    }
-    rightQuick();
-    positionrightQuick();
-    $(window).resize(function(){
-      positionrightQuick();
-    });
-    $(window).scroll(function() {
-      rightQuick();
-    });
-
-  }();
-
-
+   */
 
   window.ngt = {
-        browser: browser,
-        cpbar: cpbar,
-        //snap:snap(1920,1200),
-        snap:snap,
-        activeMenu:activeMenu,
         popup: popup,
         defaultPopup: popup.defaultPopup,
         videoPopup: popup.videoPopup,
-        gallery: gallery,
-        rightQuick: rightQuick
+        galleryPopup: popup.galleryPopup
     }
 })(window);
