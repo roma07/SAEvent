@@ -18,7 +18,7 @@
      ******************************************/
     var popup = (function(){
       // popup전역 변수
-      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,adjustedPopMarginTop,
+      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,adjustedPopMarginTop,adjustedPopHeight,
           $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,$popSnap,
           downTarget, //[D] when popup button clicked, mousedown evnet's target
           upTarget; //[D] when popup button clicked, mouseup evnet's target
@@ -100,14 +100,14 @@
 
       //[D] 오픈시 팝업 위치 조절
       function popBeforeOpenSnap(){
-        if( $win.height()<= popHeight+(popMarginTop*2) ){
+        if( $win.height()<= popHeight+(popMarginTop) ){
           console.log('팝업이 화면보다 큼')
           $ele.css({
             "marginTop": popMarginTop+100,
             "height": popHeight,
             'position':"static"
           });
-          popHeight = popHeight;
+          adjustedPopHeight = popHeight;
           adjustedPopMarginTop = popMarginTop;
         }else{
           console.log('팝업이 화면보다 작음')
@@ -117,13 +117,13 @@
             "height":$win.height()-(($win.height()-popHeight)/2)-100,
             'position':"relative"
           });
-          popHeight = $win.height()-(($win.height()-popHeight)/2);
+          adjustedPopHeight = $win.height()-(($win.height()-popHeight)/2)-100;
         }
       }
       //[D] 팝업 위치 조절
       function popSnap(){
-        console.log(popMarginTop);
-        if( $win.height()< popHeight+popMarginTop*2){
+        console.log(popHeight);
+        if( $win.height()< popHeight+popMarginTop){
           console.log('리사이징중: 팝업이 화면보다 큼')
           $ele.css({
             "marginTop": popMarginTop,
@@ -161,13 +161,21 @@
 
       //[D] 팝업 닫기
       function closePop(){
-        afterClosePop();
+        $popupWrapBg.animate({
+          opacity:0
+        },1000,function(){
+          removeBasisEle();
+        });
+        $ele.animate({
+          'marginTop' :adjustedPopMarginTop+100,
+          'height':adjustedPopHeight
+        },1000,'easeInCubic',function(){afterClosePop()});
+
         function afterClosePop(){
           $ele.hide();
-          $popupWrapBg.hide();
           $('body').removeClass('overFlowHidden')
           //$popSnap.css("paddingRight","0");
-          removeBasisEle();
+
         }
       }
 
@@ -199,7 +207,7 @@
         popOptionsValidate(options);
 
         $ele = $(element),
-        $popSnap = $(".imgSnap,.gnbBannerSec");
+        //$popSnap = $(".imgSnap,.gnbBannerSec");
 
         createBasisEle();
         popBeforeOpenSnap();
