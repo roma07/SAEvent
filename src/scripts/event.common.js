@@ -95,7 +95,9 @@
       //[D] 팝업 기반요소 삭제
       function removeBasisEle(){
         $('#ngt-popup-bg').remove();
-        $ele.insertAfter('#wrap');
+        if (!$ele.is('#videoPopup')) {
+          $ele.insertAfter('#wrap');
+        }
         $('#ngt-popup-wrap').remove();
       }
 
@@ -165,11 +167,11 @@
 
       //[D] 팝업 닫기
       function closePop(){
-        $ele.animate({
+        $ele.stop().animate({
           'marginTop' :adjustedPopMarginTop+100,
           'height':adjustedPopHeight
         },300,'easeInCubic',function(){afterClosePop()});
-        $popupBg.animate({
+        $popupBg.stop().animate({
           opacity:0
         },400,function(){
           removeBasisEle();
@@ -269,9 +271,9 @@
          $popupWrapBg.on('click', function(e) {
            e.preventDefault();
            $('#videoPopup').remove();
-           $('#videoPopup').find('.popIframe').remove();
          })
       };
+
       var galleryType = function(element,options){
 
         /*[D]
