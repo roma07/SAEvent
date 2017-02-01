@@ -89,12 +89,13 @@
         $popWrap.append("<div id='ngt-popup-close'><a href=''><img src='../assets/images/popup/popup_close.png' alt='팝업 닫기'></a></div>");
         $popCloseBtn = $('#ngt-popup-close');
         $popupWrapBg = $('#ngt-popup-close,#ngt-popup-wrap,#ngt-popup-bg');
+        $popupBg = $('#ngt-popup-bg,#ngt-popup-close').css('opacity',0);
       }
 
       //[D] 팝업 기반요소 삭제
       function removeBasisEle(){
         $('#ngt-popup-bg').remove();
-        $ele.insertAfter($popWrap);
+        $ele.insertAfter('#wrap');
         $('#ngt-popup-wrap').remove();
       }
 
@@ -153,7 +154,10 @@
         $ele.animate({
           'marginTop' :adjustedPopMarginTop,
           'height':popHeight
-        },500,'easeInCubic',function(){});
+        },300,'easeInCubic',function(){});
+        $popupBg.animate({
+          opacity:popBgOpacity
+        },400);
         $popupWrapBg.show();
         $('body').addClass('overFlowHidden');
         //$popSnap.css("paddingRight","17px");
@@ -161,21 +165,20 @@
 
       //[D] 팝업 닫기
       function closePop(){
-        $popupWrapBg.animate({
-          opacity:0
-        },1000,function(){
-          removeBasisEle();
-        });
         $ele.animate({
           'marginTop' :adjustedPopMarginTop+100,
           'height':adjustedPopHeight
-        },1000,'easeInCubic',function(){afterClosePop()});
-
+        },300,'easeInCubic',function(){afterClosePop()});
+        $popupBg.animate({
+          opacity:0
+        },400,function(){
+          removeBasisEle();
+        });
         function afterClosePop(){
           $ele.hide();
-          $('body').removeClass('overFlowHidden')
+          $('body').removeClass('overFlowHidden');
+          $popupWrapBg.hide();
           //$popSnap.css("paddingRight","0");
-
         }
       }
 
