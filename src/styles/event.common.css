@@ -38,6 +38,16 @@ body.overFlowHidden{overflow: hidden;}
 .ngt-popup {position: relative; display: block;margin:0 auto;background-repeat: no-repeat;background-position:center top;display:none;top:50%;cursor:auto;width:1000px;z-index:1;}
 
 
+/*****************************************
+* gallery popup
+******************************************/
+
+.gallery_view{float:left;}
+/*.gallery_view>div{display:none;}*/
+/*.gallery_view>div:first-child{display:block;}*/
+.gallery_thumb{float:right;top:-5px;width:220px;}
+.gallery_thumb div{float:left;margin:0px 5px 10px;cursor:pointer;background-color: #999999;}
+
 
 
 

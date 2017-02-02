@@ -45,20 +45,20 @@
         -->
         <button onclick="ngt.videoPopup('bq4rHfxsbTc', {width: 1000, height: 601,zIndex: 10000000, marginTop: 30, bgOpacity: 0.5} ,{rel:0, controls:0, showinfo:1});">비디오 팝업 A</button>
         <br><br>
-        <button onclick="ngt.videoPopup('bq4rHfxsbTc',{zIndex: 10000000});">비디오 팝업 B</button>
+        <button onclick="ngt.videoPopup('1b7x4WapVFk',{zIndex: 10000000});">비디오 팝업 B</button>
         <br><br>
 
         <!-- [D] galleryPopup
-        ngt.galleryPopup(element,options,youtubeOptions);
-        element: //id or class nameelement 필수
+        ngt.galleryPopup(element,options,galleryOptions);
+        element: //id or class name element 필수
         options: //ngt.popup 동일
-        youtubeOptions: {
-        'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
-        'controls': 1, //플레이어 컨트롤 표시
-        'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
+        galleryOptions: {
+            view: $('#gallery01_view'),//view element id 필수
+            thumb: $('#gallery01_thum'),//thumbnail element id 필수
+            thumbOpacity: 0.5 //썸네일 비활성시 적용 opacity
         }
         -->
-        <a href="javascript:;" class="btn_pop"  onclick="ngt.galleryPopup('#galleryPopup', {width: 1200, height:601, zIndex: 10000000, bgOpacity:0.8});">갤러리</a>
+        <a href="javascript:;" class="btn_pop"  onclick="ngt.galleryPopup('#galleryPopup01', {width: 1185, height:540, zIndex: 10000000, bgOpacity:0.8},{view: '#gallery01_view',thumb: '#gallery01_thumb',thumbOpacity: 0.3})">갤러리</a>
     </div>
     <div id="aPopup" class="ngt-popup">
         <p class="hide">aPopup</p>
@@ -72,31 +72,31 @@
 
     <div id="bPopup" class="ngt-popup"></div>
 
-    <div id="galleryPopup" class="ngt-popup">
-        <ul class="list_view">
-            <li id="view01" class="on"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view02"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view03"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view04"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view05"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view06"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view07"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view08"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view09"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li id="view10"><a href="javascrivpt:;"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-        </ul>
-        <ul class="list_thum">
-            <li class="thum01 on"><a href="#view01"></a></li>
-            <li class="thum02"><a href="#view02"></a></li>
-            <li class="thum03"><a href="#view03"></a></li>
-            <li class="thum04"><a href="#view04"></a></li>
-            <li class="thum05"><a href="#view05"></a></li>
-            <li class="thum06"><a href="#view06"></a></li>
-            <li class="thum07"><a href="#view07"></a></li>
-            <li class="thum08"><a href="#view08"></a></li>
-            <li class="thum09"><a href="#view09"></a></li>
-            <li class="thum10"><a href="#view10"></a></li>
-        </ul>
+    <div id="galleryPopup01" class="ngt-popup">
+        <div class="gallery_view" id="gallery01_view">
+            <div><img src="../assets/images/gallery/view01.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view02.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view03.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view04.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view05.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view06.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view07.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view08.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view09.png" alt=""></div>
+            <div><img src="../assets/images/gallery/view10.png" alt=""></div>
+        </div>
+        <div class="gallery_thumb" id="gallery01_thumb">
+            <div><img src="../assets/images/gallery/thum01.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum02.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum03.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum04.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum05.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum06.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum07.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum08.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum09.png" alt=""></div>
+            <div><img src="../assets/images/gallery/thum10.png" alt=""></div>
+        </div>
     </div>
 </body>
 </html>

@@ -274,19 +274,79 @@
          })
       };
 
-      var galleryType = function(element,options){
+      var galleryType = function(element,options,galleryOptions){
+        /*
+        ngt.galleryPopup(element,options,galleryOptions);
+        element: //id or class name element 필수
+        options: //ngt.popup 동일
+          galleryOptions: {
+            view: $('#gallery01_view'),//view element id 필수
+            thumbnail: $('#gallery01_thum'),//thumbnail element id 필수
+        }
+        */
 
-        /*[D]
-         ngt.videoPopup(youtubeCode,options,youtubeOptions);
-         youtubeCode, //필수
-         options: //ngt.popup 동일
-         youtubeOptions: {
-         'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
-         'controls': 1, //플레이어 컨트롤 표시
-         'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
-         }
-         */
+        //[D] galleryOptions 유효성체크
+        if (!$(galleryOptions.view).length) { throw new Error('view 전달인자는 존재하는 요소의 id 선택자로 필수 전달해야 합니다.'); }
+        if (!$(galleryOptions.thumb).length) { throw new Error('thumb 전달인자는 존재하는 요소의 id 선택자로 필수 전달해야 합니다.'); }
+
+        //[D] galleryOptions default 값
+        var _galleryOptions = {
+          'thumbOpacity': 0.5,
+        }
+        var $view = $(galleryOptions.view).children('div'),
+            $thumb = $(galleryOptions.thumb).children('div'),
+            thumbOpacity = (galleryOptions.thumbOpacity!="undefined")? galleryOptions.thumbOpacity: _galleryOptions.thumbOpacity;
+
+
+
+        //[D] 갤러리 팝업 init
+        function init(){
+          $view.css('display','none');
+          $view.first().css('display','block');
+          $thumb.removeClass('active').css('opacity',thumbOpacity);
+          $thumb.first().addClass('active').css('opacity',1);
+          bindEvent();
+        }
+        function bindEvent(){
+          $thumb.on("mouseenter",function(){
+            $(this).css('opacity',1);
+          });
+          $thumb.on("mouseleave",function(){
+            $thumb.each(function(){
+              if($(this).hasClass('active')){
+                $(this).css('opacity',1);
+              }else{
+                $(this).css('opacity',thumbOpacity);
+              }
+            });
+          });
+          $thumb.on("click",function(e){
+            e.preventDefault();
+            selectThumb($(this));
+          });
+        }
+        function selectThumb(selectedThumb){
+          $thumb.each(function(){
+            if($(this).hasClass('active')){
+              $(this).removeClass('active').css('opacity',thumbOpacity);
+            }
+          });
+          selectedThumb.addClass('active').css('opacity',1);
+          var selectedThumb = $thumb.index(selectedThumb);
+          $view.css('display','none');
+          $view.eq(selectedThumb).css('display','block');
+        }
+        init();
+
         defaultType(element,options);
+        //[D] 갤러리 bindEvent off
+
+        $popupWrapBg.on('click', function(e) {
+          e.preventDefault();
+          if($(e.target).parent($thumb) || $(e.target).is($thumb)) return;
+          $thumb.off();
+        })
+
       };
       return {
         defaultPopup : defaultType,
@@ -294,32 +354,6 @@
         galleryPopup : galleryType
       }
     })();
-
-
-
-  /*****************************************
-     * Layer popup gallery
-     *****************************************
-    var gallery = (function(element){
-      ngt.popup(element);
-      $('.list_thum li').each(function() {
-        var $target = $(this).find('a').attr("href");
-        $(this).on('click', function(e) {
-          e.preventDefault();
-          $('.list_view li').removeClass('on');
-          $($target).addClass('on');
-          $('.list_thum li').removeClass('on');
-          $(this).addClass('on');
-        });
-      });
-
-      function galleryInit(){
-        $('.list_view li,.list_thum li').removeClass('on');
-        $('#view01,#view11,.thum01').addClass('on');
-      }
-      galleryInit();
-    });
-   */
 
   window.ngt = {
         popup: popup,
