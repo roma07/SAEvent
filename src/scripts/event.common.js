@@ -105,7 +105,7 @@
 
       //[D] 팝업 오픈 전 위치 조절
       function popBeforeOpenSnap(){
-        if( $win.height()<= popHeight+(popMarginTop*2) ){
+        if( $win.height()<= popHeight+(popMarginTop) ){
           //[D] 팝업이 화면보다 클 경우
           $ele.css({
             "marginTop": popMarginTop+100,
@@ -127,7 +127,7 @@
       }
       //[D] 팝업 오픈 후 위치 조절
       function popSnap(){
-        if( $win.height()< popHeight+popMarginTop*2){
+        if( $win.height()< popHeight+popMarginTop){
           //[D] 팝업이 화면보다 클 경우
           console.log('리사이징중: 팝업이 화면보다 큼')
           $ele.css({

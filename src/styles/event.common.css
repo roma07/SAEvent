@@ -43,8 +43,6 @@ body.overFlowHidden{overflow: hidden;}
 ******************************************/
 
 .gallery_view{float:left;}
-/*.gallery_view>div{display:none;}*/
-/*.gallery_view>div:first-child{display:block;}*/
 .gallery_thumb{float:right;top:-5px;width:220px;}
 .gallery_thumb div{float:left;margin:0px 5px 10px;cursor:pointer;background-color: #999999;}
 

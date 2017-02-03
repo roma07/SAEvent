@@ -10,34 +10,6 @@ body{font-size:0;min-width: 1200px;}
 #wrap a.btn_pop{display: inline-block;width: 198px;height: 50px; line-height:50px;text-align: center;  border: 1px solid #999;  background-color: #eee; font-size:12px;}
 #wrap br{font-size:15px;}
 
-/* galleryPopup */
-.list_view{width:960px;}
-.list_view li{width:960px;height:540px;display:none;position:relative;}
-.list_view li.on{display:block;}
-.list_view li#view01.on{background:url("../../assets/images/gallery/view01.png") 0 0 no-repeat;}
-.list_view li#view02.on{background:url("../../assets/images/gallery/view02.png") 0 0 no-repeat;}
-.list_view li#view03.on{background:url("../../assets/images/gallery/view03.png") 0 0 no-repeat;}
-.list_view li#view04.on{background:url("../../assets/images/gallery/view04.png") 0 0 no-repeat;}
-.list_view li#view05.on{background:url("../../assets/images/gallery/view05.png") 0 0 no-repeat;}
-.list_view li#view06.on{background:url("../../assets/images/gallery/view06.png") 0 0 no-repeat;}
-.list_view li#view07.on{background:url("../../assets/images/gallery/view07.png") 0 0 no-repeat;}
-.list_view li#view08.on{background:url("../../assets/images/gallery/view08.png") 0 0 no-repeat;}
-.list_view li#view09.on{background:url("../../assets/images/gallery/view09.png") 0 0 no-repeat;}
-.list_view li#view10.on{background:url("../../assets/images/gallery/view10.png") 0 0 no-repeat;}
-.list_view a{display:block;left:790px;bottom:30px;position: absolute;}
-.list_thum{width:220px;left:50%;margin-left:200px;top:0;position:absolute;}
-.list_thum li{margin:0 10px 10px 0;background-color:#353535;float:left;}
-.list_thum li a{width:100px;height:100px;background-image:url("../../assets/images/gallery/bg_thum.png");opacity:0.3;filter:alpha(opacity=30);display: block;}
-.list_thum li.thum01 a{background-position:0 0;}
-.list_thum li.thum02 a{background-position:-110px 0px;}
-.list_thum li.thum03 a{background-position: 0 -110px;}
-.list_thum li.thum04 a{background-position:-110px -110px;}
-.list_thum li.thum05 a{background-position:0px -220px;}
-.list_thum li.thum06 a{background-position:-110px -220px;}
-.list_thum li.thum07 a{background-position:0px -330px;}
-.list_thum li.thum08 a{background-position:-110px -330px;}
-.list_thum li.thum09 a{background-position:0px -440px;}
-.list_thum li.thum10 a{background-position:-110px -440px;}
 
 
 
