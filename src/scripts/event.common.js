@@ -21,10 +21,9 @@
       var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,
           adjustedPopMarginTop, //[D] 화면 사이즈에 따라 변경된 팝업 MarginTop 값
           adjustedPopHeight, //[D] 화면 사이즈에 따라 변경된 팝업 높이 값
-          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,
+          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,$popSnap,
           downTarget, //[D] $popupWrapBg 클릭시 , 'mousedown' 이벤트 타겟
           upTarget; //[D] $popupWrapBg 클릭시 , 'mouseup' 이벤트 타겟
-
 
       /*[D] defaultPopup
        ngt.popup(element, options);
@@ -106,7 +105,7 @@
 
       //[D] 팝업 오픈 전 위치 조절
       function popBeforeOpenSnap(){
-        if( $win.height()<= popHeight+(popMarginTop) ){
+        if( $win.height()<= popHeight+(popMarginTop*2) ){
           //[D] 팝업이 화면보다 클 경우
           $ele.css({
             "marginTop": popMarginTop+100,
@@ -128,7 +127,7 @@
       }
       //[D] 팝업 오픈 후 위치 조절
       function popSnap(){
-        if( $win.height()< popHeight+popMarginTop){
+        if( $win.height()< popHeight+popMarginTop*2){
           //[D] 팝업이 화면보다 클 경우
           console.log('리사이징중: 팝업이 화면보다 큼')
           $ele.css({
@@ -161,6 +160,8 @@
         },400);
         $popupWrapBg.css('display',"block");
         $('body').addClass('overFlowHidden');
+        $popSnap.css("paddingRight","17px");
+
       }
 
       //[D] 팝업 닫기
@@ -175,6 +176,7 @@
         },300,function(){
           removeBasisEle();
           $('body').removeClass('overFlowHidden');
+          $popSnap.css("paddingRight","0");
           $popupWrapBg.css('display',"none");
         });
       }
@@ -207,7 +209,10 @@
         if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
         popOptionsValidate(options);
 
+        console.log($body);
+
         $ele = $(element);
+        $popSnap = $(".imgSnap");
 
         createBasisEle();
         popBeforeOpenSnap();
