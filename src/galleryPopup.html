@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event Common Module</title>
+    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
+    <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="scripts/event.common.js"></script>
+    <style>
+        body { padding: 20px 0 0 0; text-align: center; }
+        button { width: 200px; height: 80px; }
+    </style>
+</head>
+<body>
+
+    <!--
+       ## 갤러리 레이어팝업 ##
+       ngt.youtubePopup(element, option);
+       param: element // 팝업 태그 id or class 이름
+       param: option // 팝업 css 설정
+    -->
+    <button onclick="ngt.galleryPopup('#gallery', {width: 1200, height: 670, backgroundColor: 'white', opacity: '0.8'});">갤러리팝업 열기</button>
+
+    <div id="gallery" class="popup">
+        <ul class="list_view">
+            <li><img src="../assets/images/gallery/view01.png" alt=""><a href="../assets/images/gallery/download/01.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view02.png" alt=""><a href="../assets/images/gallery/download/02.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view03.png" alt=""><a href="../assets/images/gallery/download/03.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view04.png" alt=""><a href="../assets/images/gallery/download/04.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view05.png" alt=""><a href="../assets/images/gallery/download/05.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view06.png" alt=""><a href="../assets/images/gallery/download/06.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view07.png" alt=""><a href="../assets/images/gallery/download/07.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view08.png" alt=""><a href="../assets/images/gallery/download/08.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view09.png" alt=""><a href="../assets/images/gallery/download/09.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/gallery/view10.png" alt=""><a href="../assets/images/gallery/download/10.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+        </ul>
+        <ul class="list_thumb">
+            <li class="thumb01 on"><a href="javascript:;"></a></li>
+            <li class="thumb02"><a href="javascript:;"></a></li>
+            <li class="thumb03"><a href="javascript:;"></a></li>
+            <li class="thumb04"><a href="javascript:;"></a></li>
+            <li class="thumb05"><a href="javascript:;"></a></li>
+            <li class="thumb06"><a href="javascript:;"></a></li>
+            <li class="thumb07"><a href="javascript:;"></a></li>
+            <li class="thumb08"><a href="javascript:;"></a></li>
+            <li class="thumb09"><a href="javascript:;"></a></li>
+            <li class="thumb10"><a href="javascript:;"></a></li>
+        </ul>
+    </div>
+
+</body>
+</html>
