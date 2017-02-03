@@ -17,14 +17,16 @@
      * popup
      ******************************************/
     var popup = (function(){
-      // popup전역 변수
-      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,adjustedPopMarginTop,adjustedPopHeight,
-          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,$popSnap,
-          downTarget, //[D] when popup button clicked, mousedown evnet's target
-          upTarget; //[D] when popup button clicked, mouseup evnet's target
+      // popup 전역 변수
+      var popWidth,popHeight,popBgOpacity,popMarginTop,popZIndex,
+          adjustedPopMarginTop, //[D] 화면 사이즈에 따라 변경된 팝업 MarginTop 값
+          adjustedPopHeight, //[D] 화면 사이즈에 따라 변경된 팝업 높이 값
+          $popupWrapBg,$popCloseBtn,$popBg,$popWrap,$ele,
+          downTarget, //[D] $popupWrapBg 클릭시 , 'mousedown' 이벤트 타겟
+          upTarget; //[D] $popupWrapBg 클릭시 , 'mouseup' 이벤트 타겟
 
 
-      /*[D]
+      /*[D] defaultPopup
        ngt.popup(element, options);
        element: id or class name
        options: {
@@ -32,14 +34,22 @@
        'height':600, //popup height size
        'zIndex': 1000, //popup zIndex
        'marginTop': 50, //popup margin top
-       'bgOpacity': 0.5 //shade background alpha
+       'bgOpacity': 0.8 //shade background alpha
        }
        */
+
+      //[D] Opacity 0~1 사이의 소수점 1째 자리 숫자인지 확인
+      var OpacityValidate = function(value) {
+        if (value * 10 != parseInt(value * 10)) {
+          throw new Error('Opacity 값은 소수점 1째 자리 까지의 숫자로 전달해야 합니다.');
+        } else if (value < 0 || value> 1) {
+          throw new Error('Opacity 값은 0~1 사이의 숫자로 전달해야 합니다.');
+        }
+      }
       //[D] 팝업 옵션 유효성 검사
       var popOptionsValidate = function(options){
-        //[D] 옵션값이 숫자인지 확인
         options = options || {};
-
+        //[D] 옵션값이 숫자인지 확인
         if(Object.keys(options).length){
           for(var key in options){
             if(typeof options[key] != 'number') {
@@ -47,21 +57,17 @@
             }
           }
         }
-        //[D] bgOpacity 0~1 사이의 소수점 1째 자리 숫자인지 확인
+        //[D] bgOpacity 유효성 검사
         if(options.bgOpacity != undefined){
-          if(options.bgOpacity*10 != parseInt(options.bgOpacity*10)){
-            throw new Error('bgOpacity 값은 소수점 1째 자리 까지의 숫자로 전달해야 합니다.');
-          }else if(options.bgOpacity<0 || options.bgOpacity > 1){
-            throw new Error('bgOpacity 값은 0~1 사이의 숫자로 전달해야 합니다.');
-          }
+          OpacityValidate(options.bgOpacity)
         }
-
+        //[D] defaultPopup 디폴트 옵션 값
         var _options = {
           'width': 1200,
           'height':600,
           'zIndex': 1000,
           'marginTop': 50,
-          'bgOpacity': 0.5
+          'bgOpacity': 0.8
         }
 
         popWidth = options.width || _options.width;
@@ -69,23 +75,17 @@
         popBgOpacity = options.bgOpacity || _options.bgOpacity;
         popMarginTop = options.marginTop || _options.marginTop;
         popZIndex = options.zIndex || _options.zIndex;
-
-
       }
 
       //[D] 팝업 기반요소 생성
       function createBasisEle(){
         $('body').append("<div id='ngt-popup-bg'></div>");
-        $popBg = $('#ngt-popup-bg');
-        $popBg.css({
+        $popBg = $('#ngt-popup-bg').css({
           'opacity':popBgOpacity,
           'zIndex':popZIndex -1
         });
         $('body').append("<div id='ngt-popup-wrap'></div>");
-        $popWrap = $('#ngt-popup-wrap');
-        $popWrap.css({
-          'zIndex':popZIndex
-        });
+        $popWrap = $('#ngt-popup-wrap').css({'zIndex':popZIndex});
         $popWrap.append("<div id='ngt-popup-close'><a href=''><img src='../assets/images/popup/popup_close.png' alt='팝업 닫기'></a></div>");
         $popCloseBtn = $('#ngt-popup-close');
         $popupWrapBg = $('#ngt-popup-close,#ngt-popup-wrap,#ngt-popup-bg');
@@ -95,16 +95,19 @@
       //[D] 팝업 기반요소 삭제
       function removeBasisEle(){
         $('#ngt-popup-bg').remove();
+        //[D] 비디오 팝업이 아닌 경우 팝업 컨텐츠 기존 위치에 삽입
         if (!$ele.is('#videoPopup')) {
-          $ele.insertAfter('#wrap');
+          $ele.insertAfter('#wrap').css('display','none');
+        }else{
+          $('#videoPopup').remove();
         }
         $('#ngt-popup-wrap').remove();
       }
 
-      //[D] 오픈시 팝업 위치 조절
+      //[D] 팝업 오픈 전 위치 조절
       function popBeforeOpenSnap(){
         if( $win.height()<= popHeight+(popMarginTop) ){
-          console.log('팝업이 화면보다 큼')
+          //[D] 팝업이 화면보다 클 경우
           $ele.css({
             "marginTop": popMarginTop+100,
             "height": popHeight,
@@ -113,7 +116,7 @@
           adjustedPopHeight = popHeight;
           adjustedPopMarginTop = popMarginTop;
         }else{
-          console.log('팝업이 화면보다 작음')
+          //[D] 팝업이 화면보다 작을 경우
           adjustedPopMarginTop = (popHeight/2 * -1);
           $ele.css({
             "marginTop": adjustedPopMarginTop+100,
@@ -123,71 +126,64 @@
           adjustedPopHeight = $win.height()-(($win.height()-popHeight)/2)-100;
         }
       }
-      //[D] 팝업 위치 조절
+      //[D] 팝업 오픈 후 위치 조절
       function popSnap(){
-        console.log(popHeight);
         if( $win.height()< popHeight+popMarginTop){
+          //[D] 팝업이 화면보다 클 경우
           console.log('리사이징중: 팝업이 화면보다 큼')
           $ele.css({
             "marginTop": popMarginTop,
             "height": popHeight,
             'position':"static"
           });
-          //adjustedPopMarginTop = popMarginTop;
         }else{
+          //[D] 팝업이 화면보다 작을 경우
           console.log('리사이징중: 팝업이 화면보다 작음')
           $ele.css({
             "marginTop": (popHeight/2 * -1)+'px',
             "height":$win.height()-(($win.height()-popHeight)/2),
             'position':"relative"
           });
-          //adjustedPopMarginTop = (popHeight/2 * -1);
         }
       }
 
       //[D] 팝업 열기
       function openPop(){
         console.log('openPop');
-        $ele.css({
-          'width': popWidth
-        })
+        $ele.css({'width': popWidth})
         $popWrap.append($ele);
-        $ele.show();
-        $ele.animate({
+        $ele.css('display','block').stop().animate({
           'marginTop' :adjustedPopMarginTop,
           'height':popHeight
-        },300,'easeInCubic',function(){});
-        $popupBg.animate({
+        },300,'easeInCubic');
+        $popupBg.stop().animate({
           opacity:popBgOpacity
         },400);
-        $popupWrapBg.show();
+        $popupWrapBg.css('display',"block");
         $('body').addClass('overFlowHidden');
-        //$popSnap.css("paddingRight","17px");
       }
 
       //[D] 팝업 닫기
       function closePop(){
+        console.log('closePop');
         $ele.stop().animate({
           'marginTop' :adjustedPopMarginTop+100,
           'height':adjustedPopHeight
-        },300,'easeInCubic',function(){afterClosePop()});
+        },300,'easeInCubic');
         $popupBg.stop().animate({
           opacity:0
-        },400,function(){
+        },300,function(){
           removeBasisEle();
-        });
-        function afterClosePop(){
-          $ele.hide();
           $('body').removeClass('overFlowHidden');
-          $popupWrapBg.hide();
-          //$popSnap.css("paddingRight","0");
-        }
+          $popupWrapBg.css('display',"none");
+        });
       }
 
       //[D] 이벤트 바인드
       function bindEvent(){
         var clickValidate = function (e){
           e.preventDefault();
+          //[D] 클릭 이벤트시 mouseup,mousedown 이벤트의 타겟이 동일할 경우만
           if(downTarget==upTarget){
             if($('.ngt-popup').has($(e.target)).length){return};
             if($(e.target).hasClass('ngt-popup')) return;
@@ -211,8 +207,7 @@
         if (!$(element).length) { throw new Error('전달인자는 존재하는 요소의 선택자로 전달해야 합니다.'); }
         popOptionsValidate(options);
 
-        $ele = $(element),
-        //$popSnap = $(".imgSnap,.gnbBannerSec");
+        $ele = $(element);
 
         createBasisEle();
         popBeforeOpenSnap();
@@ -270,7 +265,6 @@
         //[D] 비디오팝업 요소 삭제
          $popupWrapBg.on('click', function(e) {
            e.preventDefault();
-           $('#videoPopup').remove();
          })
       };
 
@@ -288,16 +282,17 @@
         //[D] galleryOptions 유효성체크
         if (!$(galleryOptions.view).length) { throw new Error('view 전달인자는 존재하는 요소의 id 선택자로 필수 전달해야 합니다.'); }
         if (!$(galleryOptions.thumb).length) { throw new Error('thumb 전달인자는 존재하는 요소의 id 선택자로 필수 전달해야 합니다.'); }
-
+        //[D] thumbOpacity 유효성 검사
+        if(galleryOptions.thumbOpacity != undefined){
+          OpacityValidate(galleryOptions.thumbOpacity)
+        }
         //[D] galleryOptions default 값
         var _galleryOptions = {
           'thumbOpacity': 0.5,
         }
         var $view = $(galleryOptions.view).children('div'),
             $thumb = $(galleryOptions.thumb).children('div'),
-            thumbOpacity = (galleryOptions.thumbOpacity!="undefined")? galleryOptions.thumbOpacity: _galleryOptions.thumbOpacity;
-
-
+            thumbOpacity = galleryOptions.thumbOpacity || _galleryOptions.thumbOpacity;
 
         //[D] 갤러리 팝업 init
         function init(){
@@ -339,8 +334,8 @@
         init();
 
         defaultType(element,options);
-        //[D] 갤러리 bindEvent off
 
+        //[D] 갤러리 bindEvent off
         $popupWrapBg.on('click', function(e) {
           e.preventDefault();
           if($(e.target).parent($thumb) || $(e.target).is($thumb)) return;
