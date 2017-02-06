@@ -123,19 +123,17 @@
         hidden: function(){
             if($body.height() > $window.height()){
                 this.active = true;
-                $body.css({overflow: 'hidden', margin: '0 16px 0 0'});
+                $body.css({overflow: 'hidden', margin: '0 17px 0 0', backgroundColor: '#f1f1f1'});
             }
             if(browser.name === 'Explorer' && browser.version === 7 || browser.version === 8){
-                //alert('html body scroll hidden');
                 $('html, body').css({overflow: 'hidden'});
             }
         },
         auto: function(){
             if(this.active){
-                $body.css({overflow: '', margin: ''});
+                $body.css({overflow: '', margin: '', backgroundColor: ''});
             }
             if(browser.name === 'Explorer' && browser.version === 7 || browser.version === 8){
-                //alert('html body scroll auto');
                 $('html, body').css({overflow: 'auto'});
             }
         }
@@ -149,7 +147,7 @@
             width: '101%',
             height: '101%',
             backgroundColor: 'black',
-            opacity: '0.7',
+            opacity: '0.8',
             cursor: 'zoom-out',
             zIndex: '99999998'
         },
@@ -179,9 +177,10 @@
         styles: {
             position: 'relative',
             height: '100%',
-            padding: '20px',
+            padding: '10px',
             boxSizing: 'border-box',
             textAlign: 'center',
+            overflow: 'hidden',
             cursor: 'zoom-out'
         },
         generate: function(){
@@ -216,15 +215,15 @@
             right: '0',
             padding: '10px 20px',
             fontFamily: 'Arial, Baskerville, monospace',
-            fontSize: '28px',
+            fontSize: '22px',
             color: 'lightGray',
             verticalAlign: 'middle',
             textDecoration: 'none',
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            //backgroundColor: 'rgba(0,0,0,0.2)',
             cursor: 'auto'
         },
         generate: function(){
-            this.$el = $('<a href="javascript:;">x</a>').addClass('popupClose').css(this.styles);
+            this.$el = $('<a href="javascript:;">x</a>').addClass('popupClose');
             return this.$el;
         }
     };
@@ -250,22 +249,28 @@
                     inner.styles.padding = opt.padding;
                     delete opt.padding;
                 }
+                if(opt.animation) {
+                    this.$el.addClass(opt.animation);
+                    delete opt.animation;
+                }
                 popup.styles = Object.assign({}, popup.styles, opt);
             }
             this.$el.css(this.styles).wrap(wrapper.generate()).wrap(inner.generate());
             this.$el.before(before.generate()).after(button.generate()).show();
+            if(button.$el.css('background-image') != 'none') button.$el.css('font-size', 0);
+            if(this.animation) this.$el.addClass(this.animation);
             $body.append(shade.generate());
             windowEvent.add();
             bodyScroll.hidden();
             this.active = true;
             if(browser.name === 'Explorer' && browser.version === 7 || browser.version === 8){
-                //alert('popup close button event');
                 button.$el.on('click', function(){popup.close();});
                 if(browser.version === 7){
                     this.$el.css({display: 'inline', zoom: 1});
                     before.$el.css({display: 'inline', zoom: 1});
                 }
             }
+            alert(browser.name + ', ' + browser.version);
         },
         close: function(){
             this.$el.hide().removeAttr('style').unwrap().unwrap();
@@ -279,44 +284,34 @@
         }
     };
 
-    function layerPopup(el, opt){
+    function layerPopup(el, opt, animation){
         if(typeof el === 'undefined' || typeof el === null) {
             return console.error('Please, check element id or class name!!');
+        }
+        if(typeof animation !== 'undefined' || typeof animation !== null) {
+            popup.animation = animation;
         }
         popup.$el = $(el);
         popup.open(opt);
     }
 
-    var $thumbList, $viewList, galleryActive, galleryNum;
-    function galleryPopup(el, opt){
+    function galleryPopup(el, opt, animation){
         if(typeof el === 'undefined' || typeof el === null) {
             return console.error('Please, check element id or class name!!');
         }
+        if(typeof animation !== 'undefined' || typeof animation !== null) {
+            popup.animation = animation;
+        }
         popup.$el = $(el);
         popup.open(opt);
-        if(!galleryActive){
-            $thumbList = $('.list_thumb li');
-            $viewList = $('.list_view li');
-            $thumbList.each(function(idx, el) {
-                $(el).on('click', function(e) {
-                    e.preventDefault();
-                    if(galleryNum == idx) return;
-                    $thumbList.removeClass('on');
-                    $(this).addClass('on');
-                    $viewList.hide().eq(idx).fadeIn(150);
-                    galleryNum = idx;
-                });
-            });
-            galleryActive = true;
-            galleryNum = 0;
-        }
-        $thumbList.removeClass('on').eq(0).addClass('on');
-        $viewList.hide().eq(0).show();
     }
 
-    function youtubePopup(code, opt){
+    function youtubePopup(code, opt, animation){
         if(typeof code === 'undefined' || typeof code === null) {
             return console.error('Please, check youtube share code!!');
+        }
+        if(typeof animation !== 'undefined' || typeof animation !== null) {
+            popup.animation = animation;
         }
         var option = {
             version: 3,

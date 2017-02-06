@@ -10,29 +10,75 @@
         body { padding: 20px 0 0 0; text-align: center; }
         button { width: 200px; height: 80px; }
     </style>
+    <style>
+        .list_view{position:relative;top:0;left:0;}
+        .list_view li{width:840px;height:670px;display:none;}
+        .list_view li:first-child{display:block;}
+        .list_view a{display:block;left:312px;bottom:59px;position: absolute;}
+        .list_thumb{position:absolute;right:0;top:0;width:360px;}
+        .list_thumb li{float:left;background-color:#ede9ea;}
+        .list_thumb li a{width:180px;height:134px;display:block;background:url("../assets/images/popup/gallery/bg_thumb.png") no-repeat;}
+        .list_thumb li.thumb01 a{background-position:0 0;}
+        .list_thumb li.thumb02 a{background-position:-180px 0;}
+        .list_thumb li.thumb03 a{background-position: 0 -134px;}
+        .list_thumb li.thumb04 a{background-position:-180px -134px;}
+        .list_thumb li.thumb05 a{background-position:0 -268px;}
+        .list_thumb li.thumb06 a{background-position:-180px -268px;}
+        .list_thumb li.thumb07 a{background-position:0 -402px;}
+        .list_thumb li.thumb08 a{background-position:-180px -402px;}
+        .list_thumb li.thumb09 a{background-position:0 -536px;}
+        .list_thumb li.thumb10 a{background-position:-180px -536px;}
+        .list_thumb li.thumb01.on a,.list_thumb li.thumb01 a:hover{background-position:-360px 0;}
+        .list_thumb li.thumb02.on a,.list_thumb li.thumb02 a:hover{background-position:-540px 0;}
+        .list_thumb li.thumb03.on a,.list_thumb li.thumb03 a:hover{background-position:-360px -134px;}
+        .list_thumb li.thumb04.on a,.list_thumb li.thumb04 a:hover{background-position:-540px -134px;}
+        .list_thumb li.thumb05.on a,.list_thumb li.thumb05 a:hover{background-position:-360px -268px;}
+        .list_thumb li.thumb06.on a,.list_thumb li.thumb06 a:hover{background-position:-540px -268px;}
+        .list_thumb li.thumb07.on a,.list_thumb li.thumb07 a:hover{background-position:-360px -402px;}
+        .list_thumb li.thumb08.on a,.list_thumb li.thumb08 a:hover{background-position:-540px -402px;}
+        .list_thumb li.thumb09.on a,.list_thumb li.thumb09 a:hover{background-position:-360px -536px;}
+        .list_thumb li.thumb10.on a,.list_thumb li.thumb10 a:hover{background-position:-540px -536px;}
+    </style>
+    <script>
+        $(function(){
+            var $thumbList, $viewList, galleryNum = 0;
+            $thumbList = $('.list_thumb li'), $viewList = $('.list_view li');
+            $thumbList.each(function(idx, el) {
+                $(el).on('click', function(e) {
+                    e.preventDefault();
+                    if(galleryNum == idx) return;
+                    $thumbList.removeClass('on');
+                    $(this).addClass('on');
+                    $viewList.hide().eq(idx).fadeIn(150);
+                    galleryNum = idx;
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 
     <!--
        ## 갤러리 레이어팝업 ##
-       ngt.youtubePopup(element, option);
-       param: element // 팝업 태그 id or class 이름
+       ngt.galleryPopup(element, option, animation);
+       param: element // 팝업 id or class 이름
        param: option // 팝업 css 설정
+       param: animation // 팝업 모션(zoomIn, zoomOut, slideUp, slideDown, rotateX, rotateY)
     -->
     <button onclick="ngt.galleryPopup('#gallery', {width: 1200, height: 670, backgroundColor: 'white', opacity: '0.8'});">갤러리팝업 열기</button>
 
     <div id="gallery" class="popup">
         <ul class="list_view">
-            <li><img src="../assets/images/gallery/view01.png" alt=""><a href="../assets/images/gallery/download/01.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view02.png" alt=""><a href="../assets/images/gallery/download/02.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view03.png" alt=""><a href="../assets/images/gallery/download/03.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view04.png" alt=""><a href="../assets/images/gallery/download/04.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view05.png" alt=""><a href="../assets/images/gallery/download/05.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view06.png" alt=""><a href="../assets/images/gallery/download/06.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view07.png" alt=""><a href="../assets/images/gallery/download/07.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view08.png" alt=""><a href="../assets/images/gallery/download/08.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view09.png" alt=""><a href="../assets/images/gallery/download/09.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
-            <li><img src="../assets/images/gallery/view10.png" alt=""><a href="../assets/images/gallery/download/10.zip"><img src="../assets/images/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view01.png" alt=""><a href="../assets/images/popup/gallery/download/01.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view02.png" alt=""><a href="../assets/images/popup/gallery/download/02.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view03.png" alt=""><a href="../assets/images/popup/gallery/download/03.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view04.png" alt=""><a href="../assets/images/popup/gallery/download/04.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view05.png" alt=""><a href="../assets/images/popup/gallery/download/05.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view06.png" alt=""><a href="../assets/images/popup/gallery/download/06.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view07.png" alt=""><a href="../assets/images/popup/gallery/download/07.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view08.png" alt=""><a href="../assets/images/popup/gallery/download/08.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view09.png" alt=""><a href="../assets/images/popup/gallery/download/09.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
+            <li><img src="../assets/images/popup/gallery/view10.png" alt=""><a href="../assets/images/popup/gallery/download/10.zip"><img src="../assets/images/popup/gallery/btn_load.png" alt="download"></a></li>
         </ul>
         <ul class="list_thumb">
             <li class="thumb01 on"><a href="javascript:;"></a></li>
