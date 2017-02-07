@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event Popup Module</title>
+    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
+    <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="scripts/event.common.js"></script>
+    <style>
+        /*[D] 스타일 선언 : 해당 팝업의 백그라운드 이미지 설정*/
+        #layerPopup { background-image: url("../assets/images/popup/pop_myStatus.png"); }
+    </style>
+</head>
+<body>
+    <!-- [D] defaultPopup
+    ngt.defaultPopup(element, options);
+    param: element // 팝업 태그 id or class 이름
+    param: option // 팝업 css 설정
+    -->
+
+    <button onclick="ngt.defaultPopup('#aPopup',{width: 1000, height:426,zIndex: 10000000})">팝업 A</button>
+
+    <div id="layerPopup" class="popup">
+        <div>
+            <p><img src="../assets/images/event/num_0.png" alt="0"></p>
+            <p><img src="../assets/images/event/num_5.png" alt="5"></p>
+        </div>
+    </div>
+
+</body>
+</html>
