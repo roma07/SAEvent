@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event Popup Module</title>
+    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
+    <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="scripts/event.common.js"></script>
+</head>
+<body>
+    <!-- [D] defaultPopup
+    ngt.youtubePopup(youtubeCode,options,youtubeOptions);
+    param: youtubeCode // 필수
+    param: option{
+        'width': 1200,
+        'height':600,
+        'zIndex': 1000,
+        'bgOpacity': 0.8
+    }
+    param: youtubeOptions: {
+         'autoplay': 1 //동영상 자동 재생
+         'rel': 1, //동영상이 완료되면 추천 동영상 표시 (0: 미적용 /1:적용 )
+         'controls': 1, //플레이어 컨트롤 표시
+         'showinfo': 1 //동영상 제목 및 플레이어 작업 표시
+         }
+    -->
+
+    <button onclick="ngt.youtubePopup('bq4rHfxsbTc',{width: 1000, height:426,zIndex: 10000000,bgOpacity:0.5},{autoplay:0 ,rel:0, controls:0, showinfo:1})">youtubePopup</button>
+
+</body>
+</html>

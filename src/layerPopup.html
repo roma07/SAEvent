@@ -9,16 +9,23 @@
     <style>
         /*[D] 스타일 선언 : 해당 팝업의 백그라운드 이미지 설정*/
         #layerPopup { background-image: url("../assets/images/popup/pop_myStatus.png"); }
+        #layerPopup2 { background-image: url("../assets/images/popup/pop01.png"); }
     </style>
 </head>
 <body>
     <!-- [D] defaultPopup
     ngt.defaultPopup(element, options);
     param: element // 팝업 태그 id or class 이름
-    param: option // 팝업 css 설정
+    param: option{
+        'width': 1200,
+        'height':600,
+        'zIndex': 1000,
+        'bgOpacity': 0.8
+    }
     -->
 
-    <button onclick="ngt.defaultPopup('#aPopup',{width: 1000, height:426,zIndex: 10000000})">팝업 A</button>
+    <button onclick="ngt.defaultPopup('#layerPopup',{width: 1000, height:426,zIndex: 10000000,bgOpacity:0.5})">팝업 A</button>
+    <button onclick="ngt.defaultPopup('#layerPopup2',{width: 1000, height:426,zIndex: 10000000})">팝업 B</button>
 
     <div id="layerPopup" class="popup">
         <div>
@@ -26,6 +33,7 @@
             <p><img src="../assets/images/event/num_5.png" alt="5"></p>
         </div>
     </div>
-
+    <div id="layerPopup2" class="popup">
+    </div>
 </body>
 </html>
