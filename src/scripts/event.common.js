@@ -3,60 +3,33 @@
  * Date: 2016-12-22
  */
 
-(function (global, factory) {
-    "use strict";
-    if (typeof module === "object" && typeof module.exports === "object") {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error("ngt requires a window with a document");
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
-
-    var $window, $body;
-
-    if (document.addEventListener) { // Mozilla, Opera, Webkit
-        document.addEventListener("DOMContentLoaded", function () {
-            document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-            domReady();
-        }, false);
-    } else if (document.attachEvent) { // Internet Explorer
-        document.attachEvent("onreadystatechange", function () {
-            if (document.readyState === "complete") {
-                document.detachEvent("onreadystatechange", arguments.callee);
-                domReady();
-            }
-        });
-    }
-    if (typeof Object.assign != 'function') {
-        Object.assign = function(target) {
-            'use strict';
-            if (target == null) {
-                throw new TypeError('Cannot convert undefined or null to object');
-            }
-            target = Object(target);
-            for (var index = 1; index < arguments.length; index++) {
-                var source = arguments[index];
-                if (source != null) {
-                    for (var key in source) {
-                        if (Object.prototype.hasOwnProperty.call(source, key)) {
-                            target[key] = source[key];
-                        }
+if (typeof Object.assign != 'function') {
+    Object.assign = function(target) {
+        'use strict';
+        if (target == null) {
+            throw new TypeError('Cannot convert undefined or null to object');
+        }
+        target = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+            var source = arguments[index];
+            if (source != null) {
+                for (var key in source) {
+                    if (Object.prototype.hasOwnProperty.call(source, key)) {
+                        target[key] = source[key];
                     }
                 }
             }
-            return target;
-        };
-    }
+        }
+        return target;
+    };
+}
+$(function(){
+
+    var $window = $(window),
+        $body = $('body');
 
     var browser = (function(){
-        var company = null, agent = null, versionSearchString = null;
+        var company = null, agent = null, isMobile = null, versionSearchString = null;
         var dataBrowser = [
             {string: navigator.userAgent, subString: "Edge", identity: "MS Edge"},
             {string: navigator.userAgent, subString: "MSIE", identity: "Explorer"},
@@ -67,11 +40,6 @@
             {string: navigator.userAgent, subString: "Chrome", identity: "Chrome"},
             {string: navigator.userAgent, subString: "Safari", identity: "Safari"}
         ];
-
-        function init(){
-            company = searchString(dataBrowser) || "Other";
-            agent = searchVersion(navigator.userAgent) || searchVersion(navigator.appVersion) || "Unknown";
-        }
         function searchString(data) {
             for (var i = 0; i < data.length; i++) {
                 var dataString = data[i].string;
@@ -89,11 +57,13 @@
                 return parseFloat(dataString.substring(index + versionSearchString.length + 1));
             }
         }
-        init();
-
+        company = searchString(dataBrowser) || "Other";
+        agent = searchVersion(navigator.userAgent) || searchVersion(navigator.appVersion) || "Unknown";
+        isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false;
         return {
             name: company,
             version: agent,
+            mobile: isMobile,
             info: function(){
                 return "You are using " + company + " with version " + agent + ".";
             }
@@ -107,8 +77,13 @@
                     this.$target = $(event.target);
                 },
                 mouseup: function (event) {
-                    if (this.$target.is('.popupInner, .popupClose') && $(event.target).is('.popupInner, .popupClose'))
+                    if (this.$target.is('.popupInner, .popupClose') && $(event.target).is('.popupInner, .popupClose')){
+                        if(windowEvent.closeEvent) {
+                            windowEvent.closeEvent();
+                            delete windowEvent.closeEvent;
+                        }
                         popup.close();
+                    }
                 }
             });
         },
@@ -121,17 +96,20 @@
     var bodyScroll = {
         active: false,
         hidden: function(){
+            if(browser.mobile) return;
             if($body.height() > $window.height()){
-                this.active = true;
                 $body.css({overflow: 'hidden', margin: '0 17px 0 0', backgroundColor: '#f1f1f1'});
+                this.active = true;
             }
             if(browser.name === 'Explorer' && browser.version === 7 || browser.version === 8){
                 $('html, body').css({overflow: 'hidden'});
             }
         },
         auto: function(){
+            if(browser.mobile) return;
             if(this.active){
                 $body.css({overflow: '', margin: '', backgroundColor: ''});
+                this.active = false;
             }
             if(browser.name === 'Explorer' && browser.version === 7 || browser.version === 8){
                 $('html, body').css({overflow: 'auto'});
@@ -177,7 +155,7 @@
         styles: {
             position: 'relative',
             height: '100%',
-            padding: '10px',
+            padding: '50px 0',
             boxSizing: 'border-box',
             textAlign: 'center',
             overflow: 'hidden',
@@ -270,7 +248,6 @@
                     before.$el.css({display: 'inline', zoom: 1});
                 }
             }
-            alert(browser.name + ', ' + browser.version);
         },
         close: function(){
             this.$el.hide().removeAttr('style').unwrap().unwrap();
@@ -284,12 +261,15 @@
         }
     };
 
-    function layerPopup(el, opt, animation){
+    function layerPopup(el, opt, animation, fn){
         if(typeof el === 'undefined' || typeof el === null) {
             return console.error('Please, check element id or class name!!');
         }
         if(typeof animation !== 'undefined' || typeof animation !== null) {
             popup.animation = animation;
+        }
+        if(fn) {
+            windowEvent.closeEvent = function(){ fn() };
         }
         popup.$el = $(el);
         popup.open(opt);
@@ -336,14 +316,35 @@
         popup.open(opt);
     }
 
-    function domReady(){
-        $window = $(window);
-        $body = $('body');
-    }
+    var SnapImg = (function(){
+        function SnapImg(el, opt){
+            if(typeof el === 'undefined' || typeof el === null) {
+                return console.error('Please, check element id or class name!!');
+            }
+            this.$el = $(el);
+            this.minWidth = 1200;
+            this.maxWidth = 2000;
+            if(typeof opt !== 'undefined'){
+                this.minWidth = opt.minWidth;
+                this.maxWidth = opt.maxWidth;
+            }
+        }
+        SnapImg.prototype.update = function(){
+            if(browser.name !== 'Explorer') return;
+            if($window.width() > this.maxWidth) {
+                this.$el.css({backgroundPosition: '50% 0'});
+            } else {
+                var posX = $window.width() < this.minWidth ? Math.floor((this.minWidth - this.maxWidth)/2) : Math.floor(($window.width() - this.maxWidth)/2);
+                this.$el.css({backgroundPosition: posX + 'px 0'});
+            }
+        };
+        return SnapImg;
+    })();
 
     window.ngt = {
         layerPopup: layerPopup,
         galleryPopup: galleryPopup,
         youtubePopup: youtubePopup
     };
+    window.SnapImg = SnapImg;
 });

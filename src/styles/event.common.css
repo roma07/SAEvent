@@ -6,17 +6,24 @@
 /*****************************************
  * Reset
  ******************************************/
-html, body { margin: 0; padding: 0; }
-form { margin: 0; padding: 0; }
-hr { display: none; }
-p, div, th, td, select, input { color: black; }
-img { vertical-align: middle; border: 0; }
-ul, ol , li { list-style: none; }
-input, button { cursor: pointer; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,form,fieldset,p,button{margin:0;padding:0}
+body,h1,h2,h3,h4,input,button{font-family:Malgun Gothic,"¸¼Àº °íµñ",Dotum,'µ¸¿ò',Helvetica,AppleSDGothicNeo,sans-serif;color:black}
+img,fieldset,iframe{border:0 none}
+ul,ol,li{list-style:none;}
+img{vertical-align:top}
+label,button,input[type="radio"],input[type="checkbox"]{cursor:pointer}
+input,select,button{vertical-align:middle}
+button *{position:relative}
+button img{left:-3px;*left:auto}
+html:first-child select{height:20px;padding-right:6px}
+option{padding-right:6px}
+hr{display:none}
+legend{*width:0}
 table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+input::-ms-clear{display:none}
 a { color: black; text-decoration: none; }
 a[disabled] { cursor: default; opacity: 0.5; filter: alpha(opacity=50); }
-a:link, a:visited { color: green; }
+a:link, a:visited { color: blue; }
 a:hover, a:focus { color: red; text-decoration: underline; }
 a:active { color: yellow; text-decoration: underline; }
 

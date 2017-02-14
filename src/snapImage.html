@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event Common Module</title>
+    <link rel="stylesheet" type="text/css" href="styles/event.common.css" />
+    <script type="text/javascript" src="http://img.s.nx.com/sa/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="scripts/event.common.js"></script>
+    <style>
+        #pcbang {
+            background: url("../assets/images/pcbang_bg.jpg") no-repeat 50% 0;
+            min-width: 1200px;
+            height: 3860px;
+        }
+        #clan {
+            background: url("../assets/images/clan_bg.jpg") no-repeat 50% 0;
+            min-width: 1200px;
+            height: 1350px;
+        }
+        #welcome {
+            background: url("../assets/images/welcome_bg.jpg") no-repeat 50% 0;
+            min-width: 1200px;
+            height: 2207px;
+        }
+    </style>
+    <script>
+        $(function(){
+            /**
+             * 배경이미지 anti aliasing 제거 (for IE)
+             * @constructor SnapImg(element, option);
+             * @param {string} 배경이미지 선언 class 이름
+             * @param {object} 최소 보여질 width, 최대 보여질 width (default: 1200, 2000}
+             * @property update 이미지 위치 갱신
+             */
+            var bgImage = new SnapImg('.backgroundImage', {minWidth: 1200, maxWidth: 2000});
+            bgImage.update();
+            $(window).resize(function(e){
+                bgImage.update();
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="pcbang" class="backgroundImage">
+
+</div>
+<div id="clan" class="backgroundImage">
+
+</div>
+<div id="welcome" class="backgroundImage">
+
+</div>
+
+</body>
+</html>

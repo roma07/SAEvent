@@ -17,17 +17,23 @@
             height: 50px;
         } */
     </style>
+    <script>
+        function closeEvent(){
+            console.log('popup close');
+        }
+    </script>
 </head>
 <body>
 
     <!--
        ### 일반 레이어팝업 ###
-       ngt.layerPopup(element, option, animation);
+       ngt.layerPopup(element, option, animation, function);
        param: element // 팝업 id or class 이름
        param: option // 팝업 css 설정
        param: animation // 팝업 모션(zoomIn, zoomOut, slideUp, slideDown, rotateX, rotateY)
+       param: callback // 팝업 닫기 이벤트 호출
     -->
-    <button onclick="ngt.layerPopup('#layerPopup', {width: 1000, height: 500, backgroundColor: 'white'}, 'slideUp');">팝업열기</button>
+    <button onclick="ngt.layerPopup('#layerPopup', {width: 1000, height: 500, padding: '100px', backgroundColor: 'white'}, 'slideUp', closeEvent);">팝업열기</button>
 
     <div id="layerPopup" class="popup">
         is best used during development or debugging; the compressed file saves bandwidth and improves performance in production. You can also download a sourcemap file for use when debugging with a compressed file. The map file is not required for users to run jQuery, it just improves the developer's debugger experience. As of jQuery 1.11.0/2.1.0 the //# sourceMappingURL comment is not included in the compressed file.
